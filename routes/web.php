@@ -360,6 +360,13 @@ Route::get('/admin/doDropStat/{slug}',[
     'uses' => 'AdminController@doDropStat'
 ])->middleware('jlma.checkauth');
 
+Route::get('/admin/logs',[
+    'as' => 'adminLogs',
+    'uses' => 'AdminController@logs'
+])->middleware('jlma.checkauth','jlma.breadcrumb');
+
+
+
 
 
 
@@ -461,4 +468,14 @@ Route::post('/admin/doAddCustomerService',[
 Route::post('/admin/doAddStat',[
     'as' => 'adminDoAddStat',
     'uses' => 'AdminController@doAddStat'
+])->middleware('jlma.checkauth');
+
+Route::post('/admin/doSearchEventsBetween/',[
+    'as' => 'adminDoSearchEventsBetween',
+    'uses' => 'AdminController@doSearchEventsBetween'
+])->middleware('jlma.checkauth');
+
+Route::post('/admin/doSearchLastEvents/',[
+    'as' => 'adminDoSearchLastEvents',
+    'uses' => 'AdminController@doSearchLastEvents'
 ])->middleware('jlma.checkauth');

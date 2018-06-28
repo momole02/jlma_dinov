@@ -31,6 +31,7 @@ class Rights
         'adminDoDropCustomerService' => 'root',
         'adminStats' => 'root',
         'adminDoDropStat' => 'root',
+        'adminLogs' => 'root',
 
         'adminDoSearchClient' => 'root',
         'adminDoAddVehicleBrand' => 'root',

@@ -8,43 +8,67 @@
 
 namespace jlma ;
 
+use Illuminate\Support\Facades\DB;
+
 class EventStock
 {
     /**
      * @brief ajoute un nouvel évenement
      *
-     * @param $type string Type de l'évenement
+     * @param $type string Type de l'évenement(nom)
+     * @param $titre string Titre de l'évenement
      * @param $description string Description de l'évenement
-     * @param $data string Données de l'évenement
+     * @param $data string Description de l'évenement
+     * @param $link  string lien de l'objet concerné
      *
     */
-    public function storeEvent( $type, $description , $data )
+    public static function storeEvent( $type, $titre , $description , $data, $link )
     {
-        $type = DB::table('jla_type_evenement')->where( 'nom_type_even' , trim($type) )->first();
+        $exists= DB::table('jla_type_evenement')->where( 'code_type_even' , trim($type) )->exists();
 
 
-        if( $type !=null ){
-            $typeID = $type->id_type_even;
+        if( $exists){
             DB::table('jla_evenement')->insert([
+                'code_even' => $type,
+                'titre_even' => $titre,
                 'desc_even' => $description ,
-                'donnees_even' => $data,
-                'fk_id_type_even' => $typeID
+                'lien_even' => $link,
+                'slug' => Front_Utils::makeSlug( $titre )
             ]);
         }
     }
 
+
     /**
-     * @brief retourne les n derniers évenements
+     * @brief retourne des évenements dans une plage donnée
      *
-     * @param $nb int nombre d'évenements à renvoyer
+     * @param $begin_date string date de début au format ISO
+     * @param $end_date string date de fin au format ISO
      *
-     * @return array un tableau contenant les différents évenements
-     *
+     * @return array une liste d'évenements
     */
-    public function getLastEvents( $nb )
+    public static function getBetweenDates( $begin_date , $end_date )
     {
-        $events = DB::table('jla_evenement')->orderBy( 'date_even','desc' )->limit($nb)->get();
+        $events = DB::table('jla_evenement')->whereBetween( 'date_even' , [$begin_date , $end_date] )->where('archive','0')->get();
+
+        return $events ;
+    }
+
+    /**
+     * @brief affiche les N premiers évenements
+     *
+     * @param int N
+     *
+     * @return array la liste d'évenements
+    */
+    public static function getNFirsts( $N , $order='asc')
+    {
+        $events = DB::table('jla_evenement')
+            ->orderby('date_even',$order)
+            ->where('archive','0')->skip(0)->limit($N)->get( );
 
         return $events;
     }
+
+
 }

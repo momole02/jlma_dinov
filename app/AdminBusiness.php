@@ -56,12 +56,13 @@ class AdminBusiness
             ['Comptes' , route('adminClients') , null],
             ['Rech. clients ' , route('adminSearchClients') , null],
             ['Modèles/Marques' , route('adminVehiclesBrands'), null],
+            ['Suivi' , route('adminLogs'), null],
             ['Contenu' , '#' ,[
                 ['Temoignages' , route('adminTestimonials') ],
                 ['FAQs' , route('adminFaqs') ],
                 ['Service client' , route('adminCustomerService') ],
                 ['Statistiques' , route('adminStats')],
-                ['Position géographique' , '#' ]]
+                ]
             ]
         ];
 

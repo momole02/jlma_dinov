@@ -11,6 +11,7 @@ use jlma\AdminBreadcrumb;
 use jlma\AdminBusiness;
 use jlma\CarBusiness;
 use jlma\Breadcrumb;
+use jlma\EventStock;
 use jlma\Front_Utils;
 
 
@@ -435,6 +436,17 @@ class AdminController extends Controller
 
         return view('admin/stats')
             ->with('stats' , $stats)
+            ->with('choosed_menu' , $this->getTheGoodMenu());
+    }
+    
+    
+    public function logs(  )
+    {
+
+        $events = EventStock::getNFirsts( 10 ); /*afficher les 10 derniers évenements*/
+
+        return view('admin/eventList')
+            ->with('events' , $events)
             ->with('choosed_menu' , $this->getTheGoodMenu());
     }
 
@@ -966,10 +978,42 @@ class AdminController extends Controller
         DB::table('jla_stats')->where('slug' , $slug)->delete();
 
         return redirect()->route('adminStats');
+    }
 
+    public function doSearchEventsBetween( Request $req )
+    {
+        $req->validate([
+            'log-begin-date' =>'required',
+            'log-end-date' => 'required'
+        ]);
+
+        $logBeginDate = $req->post('log-begin-date');
+        $logEndDate = $req->post('log-end-date');
+
+        $events = EventStock::getBetweenDates( $logBeginDate, $logEndDate );
+
+        return view('admin/eventList')->with('choosed_menu' , $this->getTheGoodMenu())
+            ->with('events' , $events);
 
     }
 
+
+    public function doSearchLastEvents( Request $req )
+    {
+        $req->validate([
+            'log-nb-items' => 'required',
+            'log-order' => 'required'
+        ]);
+
+        $N = $req->post('log-nb-items');
+        $order = $req->post('log-order')==='asc' ? 'asc' : 'desc';
+
+
+        $events = EventStock::getNFirsts( $N , $order );
+
+        return view('admin/eventList')->with('choosed_menu' , $this->getTheGoodMenu())
+            ->with('events' , $events);
+    }
 
 }
 
