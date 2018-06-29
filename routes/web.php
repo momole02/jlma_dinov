@@ -366,6 +366,25 @@ Route::get('/admin/logs',[
 ])->middleware('jlma.checkauth','jlma.breadcrumb');
 
 
+Route::get('/admin/doArchiveEvent/{slug}',[
+    'as' => 'adminDoArchiveEvent',
+    'uses' => 'AdminController@doArchiveEvent'
+])->middleware('jlma.checkauth');
+
+
+Route::get('/admin/eventCard/{slug}',[
+    'as' => 'adminEventCard',
+    'uses' => 'AdminController@eventCard'
+])->middleware('jlma.checkauth','jlma.breadcrumb');
+
+
+
+
+Route::get('/admin/usernotifs',[
+    'as' => 'adminUserNotifs',
+    'uses' => 'AdminController@userNotifs'
+]);
+
 
 
 
@@ -479,3 +498,4 @@ Route::post('/admin/doSearchLastEvents/',[
     'as' => 'adminDoSearchLastEvents',
     'uses' => 'AdminController@doSearchLastEvents'
 ])->middleware('jlma.checkauth');
+

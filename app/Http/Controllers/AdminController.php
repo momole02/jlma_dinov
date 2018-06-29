@@ -106,6 +106,9 @@ class AdminController extends Controller
 
            $accountData = $accountBusiness->fetchAccount( $pseudo,$password );
             if( $accountData!=null ){
+                if( $accountData->actif!=1 ){
+                    return redirect()->route('adminLogin')->with('error_msg' , "Votre compte est inactif pour l'instant");
+                }
                 $accountBusiness->connectClient( $accountData );
 
                 return redirect()->route('adminDashboard');
@@ -356,14 +359,19 @@ class AdminController extends Controller
         $carBusiness = new CarBusiness() ;
 
         $clientData = $accountBusiness->clientData( $slug );
-        $vehicles = $carBusiness->vehiclesByAccountID( $clientData->accountData->id_compte );
-        $rentings = $carBusiness->rentingsByAccountID( $clientData->accountData->id_compte );
 
-        return view('admin/clientCard')
-            ->with('rentings',$rentings)
-            ->with('vehicles',$vehicles)
-            ->with('client' , $clientData )
-            ->with('choosed_menu' , $this->getTheGoodMenu());
+        if( $clientData!=null ) {
+            $vehicles = $carBusiness->vehiclesByAccountID($clientData->accountData->id_compte);
+            $rentings = $carBusiness->rentingsByAccountID($clientData->accountData->id_compte);
+
+            return view('admin/clientCard')
+                ->with('rentings', $rentings)
+                ->with('vehicles', $vehicles)
+                ->with('client', $clientData)
+                ->with('choosed_menu', $this->getTheGoodMenu());
+        }else{
+            return view('admin/clientCard')->with('choosed_menu', $this->getTheGoodMenu());
+        }
     }
 
 
@@ -448,6 +456,26 @@ class AdminController extends Controller
         return view('admin/eventList')
             ->with('events' , $events)
             ->with('choosed_menu' , $this->getTheGoodMenu());
+    }
+
+    public function eventCard( $slug )
+    {
+        $event=DB::table('jla_evenement')->where('slug',$slug);
+        if( $event->exists() ){
+            return view('admin/eventCard')
+                ->with('event',$event->first())
+                ->with('choosed_menu',$this->getTheGoodMenu());
+        }
+    }
+
+    public function usernotifs(  )
+    {
+        $accountBusiness = new AccountBusiness();
+        if( $accountBusiness->isClientConnected() ){
+            $accData = $accountBusiness->loggedAccountData() ;
+            return response()->json( EventStock::getUserNofications( $accData->slug ) );
+        }
+        return response()->json([]);
     }
 
     ////////////////////////////////////////////////////////////TRAITEMENTS////////////////////////////////////////////////////////////
@@ -1014,6 +1042,21 @@ class AdminController extends Controller
         return view('admin/eventList')->with('choosed_menu' , $this->getTheGoodMenu())
             ->with('events' , $events);
     }
+
+    public function doArchiveEvent( $slug )
+    {
+        $targetEvent = DB::table('jla_evenement' )->where( 'slug' ,$slug );
+
+        if( $targetEvent->exists() ){
+            $targetEvent->update(['archive' => 1]);
+        }
+
+        $adminBreadcrumb = new AdminBreadcrumb() ;
+
+        return $adminBreadcrumb->redirectLast( session()->previousUrl() );
+    }
+    
+
 
 }
 

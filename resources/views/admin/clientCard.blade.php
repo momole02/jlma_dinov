@@ -30,6 +30,10 @@
 
                 <!-- /.box-header -->
                 <div class="box-body">
+
+                    @if( !isset($client) )
+                        <h3 style="color:gray">Le client que vous voulez consulter n'existe pas ou à été supprimé</h3>
+                    @endif
                     @isset($client)
                         <div style="width:150px;padding-bottom:20px">
 
@@ -147,6 +151,57 @@
             </div>
         </div>
     </div>
+    <div clas="row">
+        <div class="col-lg-6">
+            <div class="box box-success ">
+                <div class="box-header with-border">
+                    <h3 class="box-title">CNI </h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+
+                <!-- /.box-header -->
+
+                <div class="box-body">
+                    @isset( $client )
+                        <a href="{{asset($client->img_cni)}}"><img class="img img-responsive" src="{{asset($client->img_cni)}}"></a>
+                    @endisset
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="box box-success ">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Permis</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+
+                <!-- /.box-header -->
+
+                <div class="box-body">
+                    @isset( $client )
+                        <a href="{{asset($client->img_permis)}}"><img class="img img-responsive" src="{{asset($client->img_permis)}}"></a>
+                    @endisset
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('extra-css')

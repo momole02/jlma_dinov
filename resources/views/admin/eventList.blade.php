@@ -113,12 +113,12 @@
                                </tr>
                             @foreach( $events as $eventEntry )
                                 <tr>
-                                    <td>{{$eventEntry->date_even}}</td>
+                                    <td>{{ \jlma\Front_Utils::formatDate($eventEntry->date_even)}}</td>
                                     <td>{{$eventEntry->titre_even}}</td>
-                                    <td>{!! nl2br($eventEntry->desc_even) !!}</td>
+                                    <td>{!! nl2br(substr($eventEntry->desc_even,0,30)) !!}</td>
                                     <td><a href="{{url($eventEntry->lien_even)}}" class="btn btn-success">Voir l'objet concerné</a></td>
-                                    <td><a href="#" class="btn btn-info">Voir fiche</a></td>
-                                    <td><a href="#" class="btn btn-warning">Archiver</a></td>
+                                    <td><a href="{{route('adminEventCard' , ['slug'=>$eventEntry->slug])}}" class="btn btn-info">Voir fiche</a></td>
+                                    <td><a href="{{route('adminDoArchiveEvent',['slug'=>$eventEntry->slug]) }}" class="btn btn-warning">Archiver</a></td>
                                 </tr>
                             @endforeach
                             </tbody>

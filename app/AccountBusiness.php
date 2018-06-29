@@ -87,7 +87,11 @@ class AccountBusiness
             'fk_id_type_personne' => '0'
         ]);
 
+        list($civility,$firstName,$lastName) = [ $post['client-civility'],$post['client-first-name'],$post['client-last-name'] ];
+
+
         /* inserer le compte */
+        $clientSlug=Str::slug( $post['client-pseudo'].$now->format('dmYhis') );
         DB::table('jla_compte')->insert([
             'cpte_isatif' => '(???)',
             'login' => $post['client-pseudo'],
@@ -98,12 +102,17 @@ class AccountBusiness
             'actif' => 0,
             'type_compte' => $account_type,
             'fk_id_client' => $last_id,
-            'slug' => Str::slug( $post['client-pseudo'].$now->format('dmYhis') )
+            'slug' => $clientSlug
         ]);
+
+        $desc  = "Le client $civility $firstName $lastName vient de s'inscrire";
+        $link = route('adminClientCard' , ['slug' => $clientSlug ] , false);
+        EventStock::dispatchEvent( 'NOUVELLE_INSCRIPTION' , 'Inscription( '.strtoupper($post['client-last-name']).' )' ,$desc , $link);
 
 
         $status['result'] = 'Votre inscription à bien été prise en compte, nous vous contacterons...';
         $status['success'] = true; /*l'opération a été un succès*/
+
 
         return $status;
     }

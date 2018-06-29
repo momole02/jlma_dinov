@@ -75,4 +75,16 @@ class AdminBusiness
         return $menus;
 
     }
+
+    /**
+     * @brief retourne tout les slugs des admins
+     *
+     * @return array un tableau avec les slugs de l'admin
+    */
+    public function getAllAdminSlugs( )
+    {
+        return DB::table('jla_compte')->where('type_compte' , 'root')
+            ->pluck('slug');
+
+    }
 }

@@ -170,13 +170,18 @@ class ClientController extends Controller
      */
     public function doSignup2( Request $req )
     {
-        $req->validate([
-            'img-file' => 'required'
-        ]);
+        if( session()->has('jlma-ss1-data') ){
+            $req->validate([
+                'img-file' => 'required'
+            ]);
 
-        $path = $req->file('img-file')->store('public/clients_photo');
-        session()->put('jlma-ss2-data' , Storage::url($path));
-        return redirect()->route('signupStep3');
+            $path = $req->file('img-file')->store('public/clients_photo');
+            session()->put('jlma-ss2-data' , Storage::url($path));
+            return redirect()->route('signupStep3');
+        }else{
+            return redirect()->route('login');
+        }
+
     }
 
 
@@ -216,20 +221,24 @@ class ClientController extends Controller
         $req->validate([
             'img-file' => 'required'
         ]);
+        if( session()->has('jlma-ss1-data') && session()->has('jlma-ss2-data') ) {
+            $path = $req->file('img-file')->store('public/clients_photo');
 
-        $path = $req->file('img-file')->store('public/clients_photo');
+            $business = new AccountBusiness();
+            $parameters = session()->get('jlma-ss1-data');
+            $img2 = session()->get('jlma-ss2-data');
+            $img3 = Storage::url($path);
 
-        $business = new AccountBusiness();
-        $parameters=session()->get('jlma-ss1-data');
-        $img2 = session()->get('jlma-ss2-data');
-        $img3= Storage::url($path);
+            $data = $business->register($parameters, $img2, $img3); /* sauvegarder dans la base de données */
 
-        session()->pull('jlma-ss1-data');
-        session()->pull('jlma-ss2-data');
-        $data = $business->register($parameters,$img2,$img3); /* sauvegarder dans la base de données */
-        if( $data['success'] === true)
-            return redirect()->route('home')->with('data',$data);
 
+            session()->pull('jlma-ss1-data');
+            session()->pull('jlma-ss2-data');
+            if ($data['success'] === true)
+                return redirect()->route('home')->with('data', $data);
+        }else{
+            return redirect()->route('login');
+        }
     }
 
     /**

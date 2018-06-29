@@ -32,6 +32,7 @@ class Rights
         'adminStats' => 'root',
         'adminDoDropStat' => 'root',
         'adminLogs' => 'root',
+        'eventCard' => 'root',
 
         'adminDoSearchClient' => 'root',
         'adminDoAddVehicleBrand' => 'root',
