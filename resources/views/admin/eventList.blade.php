@@ -98,38 +98,49 @@
                     <!-- /.box-tools -->
                 </div>
 
-                <!-- /.box-header -->
-                <div class="box-body table-responsive no-padding">
-                    @isset( $events )
-                        <table class="table table-hover">
-                            <tbody>
-                               <tr>
-                                   <th>Date</th>
-                                   <th>Titre</th>
-                                   <th>Description</th>
-                                   <th>Lien</th>
-                                   <th>Fiche</th>
-                                   <th>Archiver</th>
-                               </tr>
-                            @foreach( $events as $eventEntry )
+
+                <form method="post" action="{{route('adminDoArchiveEventList')}}">
+                    @csrf
+                                  <!-- /.box-header -->
+                    <div class="box-body table-responsive no-padding">
+                        @isset( $events )
+
+                            <table class="table table-hover">
+                                <tbody>
+
                                 <tr>
-                                    <td>{{ \jlma\Front_Utils::formatDate($eventEntry->date_even)}}</td>
-                                    <td>{{$eventEntry->titre_even}}</td>
-                                    <td>{!! nl2br(substr($eventEntry->desc_even,0,30)) !!}</td>
-                                    <td><a href="{{url($eventEntry->lien_even)}}" class="btn btn-success">Voir l'objet concerné</a></td>
-                                    <td><a href="{{route('adminEventCard' , ['slug'=>$eventEntry->slug])}}" class="btn btn-info">Voir fiche</a></td>
-                                    <td><a href="{{route('adminDoArchiveEvent',['slug'=>$eventEntry->slug]) }}" class="btn btn-warning">Archiver</a></td>
+                                    <th>Sel.</th>
+                                    <th>Date</th>
+                                    <th>Titre</th>
+                                    <th>Description</th>
+                                    <th>Lien</th>
+                                    <th>Fiche</th>
+                                    <th>Archiver</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
 
-                        </table>
-                    @endisset
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer">
+                                @foreach( $events as $eventEntry )
+                                    <tr>
+                                        <td><input type="checkbox" name="events-slugs[]" value="{{$eventEntry->slug}}"></td>
+                                        <td>{{ \jlma\Front_Utils::formatDate($eventEntry->date_even)}}</td>
+                                        <td>{{$eventEntry->titre_even}}</td>
+                                        <td>{!! nl2br(substr($eventEntry->desc_even,0,30)).((strlen($eventEntry->desc_even)>30) ? '...' : '') !!}</td>
+                                        <td><a href="{{url($eventEntry->lien_even)}}" class="btn btn-success">Voir l'objet concerné</a></td>
+                                        <td><a href="{{route('adminEventCard' , ['slug'=>$eventEntry->slug])}}" class="btn btn-info">Voir fiche</a></td>
+                                        <td><a href="{{route('adminDoArchiveEvent',['slug'=>$eventEntry->slug]) }}" class="btn btn-warning">Archiver</a></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
 
-                </div>
+                            </table>
+
+                        @endisset
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-warning pull-right">Archiver sélection</button>
+                    </div>
+
+                </form>
 
                 </form>
             </div>

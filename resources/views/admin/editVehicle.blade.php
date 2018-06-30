@@ -100,6 +100,7 @@
                         'car_speed_box' => isset($vehicle) ? $vehicle->boite_vitesse : '',
                         'car_color' => isset($vehicle) ? $vehicle->couleur : '',
                         'car_day_price' => isset($vehicle) ? $vehicle->prix : '',
+                        'car_week_price' => isset($vehicle) ? $vehicle->prix_semaine : '',
                         'car_month_price' => isset($vehicle) ? $vehicle->prix_mois : '',
                         'car_year_price' => isset($vehicle) ? $vehicle->prix_an : '',
 

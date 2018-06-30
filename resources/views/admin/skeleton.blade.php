@@ -69,6 +69,21 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
+
+@php
+    $accBusiness = new \jlma\AccountBusiness();
+    $pp = asset('rentit/img/preview/avatars/testimonial-140x140.jpg');
+    $name = "";
+    if( $accBusiness->isClientConnected() ){
+        $logged = $accBusiness->loggedClientData();
+        $loggedAccount = $accBusiness->loggedAccountData();
+        $pp = asset($logged->photo);
+        $login = $loggedAccount->login;
+        $name = $logged->civilite." ".$logged->prenom.' '.$logged->nom;
+    }
+@endphp
+
+
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -103,7 +118,7 @@ desired effect
                             <span class="label label-warning" id="notifCount"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header"><span id="notifHeaderMsg">AAAAAAA</span></li>
+                            <li class="header"><span id="notifHeaderMsg"></span></li>
                             <li>
                                 <!-- Inner Menu: contains the notifications -->
                                 <ul class="menu" id="notifContent">
@@ -116,7 +131,7 @@ desired effect
                                     <!-- end notification -->
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">View all</a></li>
+                            <li class="footer"><a href="{{route('adminNotificationsList')}}">Tout afficher</a></li>
                         </ul>
                     </li>
 
@@ -125,40 +140,34 @@ desired effect
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <img src="{{$pp}}" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">Alexander Pierce</span>
+                            <span class="hidden-xs">{{$name}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <img src="{{$pp}}" class="img-circle" alt="User Image">
 
                                 <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2012</small>
+                                    {{$name}}
+                                    {{--<small>Member since Nov. 2012</small>--}}
                                 </p>
                             </li>
                             <!-- Menu Body -->
                             <li class="user-body">
                                 <div class="row">
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Followers</a>
+                                    <div class="col-xs-6 text-center">
+                                        <a class="btn btn-primary" href="{{route('adminVehicles')}}"><span style="color:white">Véhicules</span></a>
                                     </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Sales</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Friends</a>
+                                    <div class="col-xs-6 text-center">
+                                        <a " class="btn btn-primary" href="{{route('adminRentings')}}"><span style="color:white">Reservations</span></a>
                                     </div>
                                 </div>
                                 <!-- /.row -->
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                </div>
                                 <div class="pull-right">
                                     <a href="{{route('adminDoLogout')}}" class="btn btn-default btn-flat">Se déconnecter</a>
                                 </div>
@@ -179,25 +188,28 @@ desired effect
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="{{$pp}}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>Alexander Pierce</p>
+                    <p>{{$login}}</p>
                     <!-- Status -->
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Connecté</a>
                 </div>
             </div>
+            <br>
+            <br>
+            <br>
 
             <!-- search form (Optional) -->
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-                </div>
-            </form>
+            {{--<form action="#" method="get" class="sidebar-form">--}}
+                {{--<div class="input-group">--}}
+                    {{--<input type="text" name="q" class="form-control" placeholder="Search...">--}}
+                    {{--<span class="input-group-btn">--}}
+                    {{--<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>--}}
+                    {{--</button>--}}
+                {{--</span>--}}
+                {{--</div>--}}
+            {{--</form>--}}
             <!-- /.search form -->
 
             <!-- Sidebar Menu -->

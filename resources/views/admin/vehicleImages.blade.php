@@ -71,11 +71,13 @@
                             <table border="1" align="right">
                                 <tr style="background:white;color:#5c92ed;font-weight:bold">
                                     <td style="padding:3px">Prix par jour</td>
+                                    <td style="padding:3px">Prix par semaine</td>
                                     <td style="padding:3px">Prix par mois</td>
                                     <td style="padding:3px">Prix par an</td>
                                 </tr>
                                 <tr style="background:white;color:red">
                                     <td style="padding:3px"><b>{{$vehicleEntry->prix}}</b> F/CFA</td>
+                                    <td style="padding:3px"><b>{{$vehicleEntry->prix_semaine}}</b> F/CFA</td>
                                     <td style="padding:3px"><b>{{$vehicleEntry->prix_mois}}</b> F/CFA</td>
                                     <td style="padding:3px"><b>{{$vehicleEntry->prix_an}}</b> F/CFA</td>
                                 </tr>

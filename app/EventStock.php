@@ -169,7 +169,7 @@ class EventStock
         $notifs = EventStock::getUserNofications( $user_slug );
 
         for( $i=0;$i<count($notifs);++$i ){
-            if( $notifs[$i]['slug']===$event_slug  ){
+            if( $notifs[$i]->slug ===$event_slug  ){
                 array_splice( $notifs , $i , 1 );
             }
         }

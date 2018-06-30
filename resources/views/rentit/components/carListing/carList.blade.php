@@ -12,20 +12,27 @@
     $nb_cars_per_page = nombre voitures par pages
  --}}
 
+
 @foreach( $list_cars as $car )
+
     <div class="thumbnail no-border no-padding thumbnail-car-card clearfix">
     <div class="media">
 
         @php
-        $defpic = null ;
-        if( count($car['photos'])!=0 )
-            $defpic = $car['photos'][0];
-        if($defpic==='<null>')
-            $defpic='rentit/img/preview/cars/car-370x220x1.jpg';
+
+
+            $defpic = null ;
+            if( count($car['photos'])>0 )
+                $defpic = asset(Storage::url($car['photos'][0]));
+            else{
+                $defpic=asset('rentit/img/preview/cars/car-370x220x1.jpg');
+
+            }
+
 
         @endphp
-       <a class="media-link" data-gal="prettyPhoto" href="{{asset($defpic)}}">
-            <img style="width:370px;height:220px" src="{{asset($defpic)}}" alt=""/>
+       <a class="media-link" data-gal="prettyPhoto" href="{{$defpic}}">
+            <img style="width:370px;height:220px" src="{{$defpic}}" alt=""/>
             <span class="icon-view"><strong><i class="fa fa-eye"></i></strong></span>
         </a>
     </div>

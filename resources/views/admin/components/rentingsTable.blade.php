@@ -14,16 +14,17 @@
     }
 @endphp
 
+<form method="post" action="{{route('adminDoDropRentingList')}}">
+@csrf
 <table class="table table-hover">
     <tbody>
     <tr>
+        <th>Sel.</th>
         <th>Locataire</th>
         <th>Contact loc.</th>
         <th>Debut location</th>
         <th>Fin location</th>
-        <th>Lieu remise</th>
         <th>Prix</th>
-        <th>Vehicule</th>
 
         <th>+info location</th>
 
@@ -38,13 +39,12 @@
     @isset($rentings)
         @foreach( $rentings as $rentingEntry )
             <tr>
+                <td><input type="checkbox" name="rentings-slugs[]" value="{{$rentingEntry->slug}}"></td>
                 <td>{{$rentingEntry->clientName}}</td>
                 <td>{{$rentingEntry->clientContact}}</td>
                 <td>{{$rentingEntry->loc_datedebut}}</td>
                 <td>{{$rentingEntry->loc_datefin}}</td>
-                <td>{{$rentingEntry->loc_lieu_remise}}</td>
                 <td>{{$rentingEntry->loc_prix}}</td>
-                <td>{{$rentingEntry->vehicleBrandModel}} - {{$rentingEntry->vehicleRegistrationNumber}}</td>
                 <td><a href="{{route('adminRentingCard',['slug'=>$rentingEntry->slug])}}" class="btn btn-info">+Reservation</a></td>
                 @if(!in_array('no-client-info',$decodedFlags))
                 <td><a href="#" class="btn btn-info">+Client</a></td>
@@ -73,10 +73,11 @@
                         @endif
 
                     @endif
-
-
                 </td>
             </tr>
         @endforeach
     @endisset
     </tbody></table>
+    <button type="submit" class="btn btn-danger"> Supprimer la sélection </button>
+
+</form>

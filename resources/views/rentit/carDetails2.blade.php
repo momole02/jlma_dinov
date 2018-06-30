@@ -94,6 +94,13 @@
                                    data-toggle="tooltip" >
                             <span class="form-control-icon"><i class="fa fa-clock-o"></i></span>
                         </div>
+
+                    <div class="form-group has-icon has-label selectpicker-wrapper">
+                            <label>Raison de la location</label>
+                            <input class="form-control" type="text" name="leasing-reason" data-live-search="true" data-width="100%"
+                                   data-toggle="tooltip" >
+                            <span class="form-control-icon"><i class="fa fa-clock-o"></i></span>
+                        </div>
                         <button type="submit" id="formSearchSubmit3" class="btn btn-submit btn-theme btn-theme-dark btn-block">Rerserver </button>
 
                     </form>
@@ -148,13 +155,10 @@
         <div class="post-media">
             <div class="owl-carousel img-carousel">
 
-                @php
-                    $exp_photos = $details->liste_photos;
-                @endphp
 
-                @foreach( $exp_photos as $photo)
-                    <div class="item"><a href="{{asset($photo)}}" data-gal="prettyPhoto">
-                            <img class="img-responsive" src="{{asset($photo)}}" alt=""/></a>
+                @foreach( $details->liste_photos as $photo)
+                    <div class="item"><a href="{{asset(Storage::url($photo))}}" data-gal="prettyPhoto">
+                            <img class="img-responsive" src="{{asset(Storage::url($photo))}}" alt=""/></a>
                     </div>
                 @endforeach
 

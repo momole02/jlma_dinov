@@ -1,6 +1,10 @@
+
+<form method="post" action="{{route('adminDoDropClientList')}}">
+    @csrf
 <table class="table table-hover">
     <tbody>
     <tr>
+        <th>Sel.</th>
         <th>N° CNI</th>
         <th>Nom </th>
         <th>Date de naissance </th>
@@ -14,6 +18,7 @@
     @isset($clients)
         @foreach($clients as $clientEntry)
             <tr>
+                <td><input type="checkbox" name="clients-slugs[]" value="{{$clientEntry->slug}}"> </td>
                 <td>{{$clientEntry->clientCni}}</td>
                 <td>{{$clientEntry->clientName}}</td>
                 <td>{{$clientEntry->clientBirthDate}}</td>
@@ -27,3 +32,5 @@
         @endforeach
     @endisset
     </tbody></table>
+    <button type="submit" class="btn btn-danger">Supprimer la sélection</button>
+</form>

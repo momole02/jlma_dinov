@@ -26,6 +26,7 @@ class AdminBreadcrumb extends Breadcrumb
         'adminStats' => ['name'=>'Statistiques' , 'level'=>1],
         'adminLogs' => ['name'=>'Logs' , 'level'=>1],
         'adminEventCard' => ['name'=>'Info evt.' , 'level'=>2],
+        'adminNotificationsList' => ['name'=>'Notifications' , 'level'=>10],
 
         'adminEditVehicle' => ['name'=>'Modifier véhicule' , 'level'=>2],
         'adminVehicleImages' => ['name'=>'Médias véhicule' , 'level'=>4],

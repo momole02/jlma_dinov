@@ -21,6 +21,7 @@
     $car_type => Type du vehicule
     $car_speed_box => Boite à vitesse
     $car_day_price=> Prix de la location /Jour
+    $car_week_price=> Prix de la location /Semaine
     $car_month_price => Prix de la location /Mois
     $car_year_price => Prix de la location /An
 
@@ -150,6 +151,15 @@
                            value="{{isset($car_day_price)?$car_day_price:''}}">
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="car-week-price" style="font-size:12px" class="col-sm-2 control-label">Prix/Jour(*)</label>
+                <div class="col-sm-10">
+                    <input required type="number" id="car-week-price" name="car-week-price" class="form-control" placeholder="Prix de la location par jour en F/CFA"
+                           value="{{isset($car_week_price)?$car_week_price:''}}">
+                </div>
+            </div>
+
             <div class="form-group">
                 <label for="car-month-price"  style="font-size:12px"  class="col-sm-2 control-label">Prix /Mois(*)</label>
                 <div class="col-sm-10">

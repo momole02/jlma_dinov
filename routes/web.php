@@ -385,6 +385,11 @@ Route::get('/admin/usernotifs',[
     'uses' => 'AdminController@userNotifs'
 ]);
 
+Route::get('/admin/notificationsList',[
+    'as' => 'adminNotificationsList',
+    'uses' => 'AdminController@notificationsList'
+])->middleware('jlma.checkauth' , 'jlma.breadcrumb');
+
 
 
 
@@ -410,6 +415,12 @@ Route::post('/admin/doEditVehicle',[
 ])->middleware('jlma.checkauth');
 
 
+Route::post('/admin/doDropVehicleList',[
+    'as' => 'adminDoDropVehicleList',
+    'uses' => 'AdminController@doDropVehicleList'
+])->middleware('jlma.checkauth' );
+
+
 Route::post('/admin/doAddVehicleImage',[
    'as' => 'adminDoAddVehicleImage',
     'uses' => 'AdminController@doAddVehicleImage'
@@ -431,9 +442,23 @@ Route::post('/admin/doSearchRentings',[
     'uses' => 'AdminController@doSearchRentings'
 ])->middleware('jlma.checkauth');
 
+Route::post('/admin/doDropRentingList',[
+   'as' => 'adminDoDropRentingList',
+    'uses' => 'AdminController@doDropRentingList'
+])->middleware('jlma.checkauth');
+
+
+
 Route::post('/admin/doSearchClients',[
    'as' => 'adminDoSearchClients',
     'uses' => 'AdminController@doSearchClients'
+])->middleware('jlma.checkauth');
+
+
+
+Route::post('/admin/doDropClientList',[
+   'as' => 'adminDoDropClientList',
+    'uses' => 'AdminController@doDropClientList'
 ])->middleware('jlma.checkauth');
 
 
@@ -497,5 +522,10 @@ Route::post('/admin/doSearchEventsBetween/',[
 Route::post('/admin/doSearchLastEvents/',[
     'as' => 'adminDoSearchLastEvents',
     'uses' => 'AdminController@doSearchLastEvents'
+])->middleware('jlma.checkauth');
+
+Route::post('/admin/doArchiveEventList',[
+    'as' => 'adminDoArchiveEventList',
+    'uses' => 'AdminController@doArchiveEventList'
 ])->middleware('jlma.checkauth');
 

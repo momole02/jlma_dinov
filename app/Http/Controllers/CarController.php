@@ -8,6 +8,7 @@
 namespace jlma\Http\Controllers;
 
 
+use Illuminate\Support\Facades\Storage;
 use jlma\AccountBusiness;
 use jlma\CarBusiness;
 use jlma\Http\Controllers\Controller;
@@ -96,6 +97,7 @@ class CarController extends Controller
 
         /* récupère le vehicule en fonction du slug */
         $vehicle_details = $car_business->vehicleBySlug( $slug );
+
 
         if( $vehicle_details != null ) {
             return view('rentit/carDetails2')

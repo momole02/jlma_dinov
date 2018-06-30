@@ -52,6 +52,7 @@ class CarBusiness
         $renting_price = Front_Utils::rentingPrice($begin_date_time , $end_date_time ,
             $vehicle->prix , $vehicle->prix_mois , $vehicle->prix_an );
 
+        $rentingSlug = Str::slug('loc'.' '.$client_account_id.' '.$date->format('dmYhis'));
         DB::table('jla_location')->insert([
             'fk_id_vehicul' => $vehicle_id ,
             'fk_id_compte' => $client_account_id,
@@ -62,12 +63,20 @@ class CarBusiness
             'loc_lieu_circulation' => $post['leasing-roam-place'],
             'loc_prix' => $renting_price,
             'loc_description' => $post['leasing-reason'],
-            'slug' => Str::slug('loc'.' '.$client_account_id.' '.$date->format('dmYhis'))
+            'slug' => $rentingSlug
         ]);
+
+
+        $accountBusiness = new AccountBusiness( );
+        $account = $accountBusiness->loggedClientData();
+        if( $account!=null ){
+            $clientName = $account->civilite.' '.$account->prenom.' '.strtoupper( $account->nom );
+            EventStock::dispatchEvent( 'NOUVELLE_RESERVATION' ,'Nouvelle reservation',
+                $clientName.' a effectué une reservation ' , route('adminRentingCard' , ['slug'=>$rentingSlug]) );
+        }
 
         $status['result'] = 'location enregistrée avec succès';
         $status['success'] = true;
-
         return $status;
 
     }
@@ -261,14 +270,14 @@ class CarBusiness
         $car->model = $this->carModelById($car->fk_id_model);
         $car->marque = $this->carBrandById($car->fk_id_marque);
         $car->type =   $this->carTypeById($car->fk_id_type_vehic);
+        $car->reserv_dates=$this->carRentingsIntervals($car->id_vehicul);
+
 
         $imgs = DB::table('jla_image_vehicul')->select('img_chemin')->where('fk_id_vehicule', $car->id_vehicul)->get();
         $car->liste_photos = [];
         foreach($imgs as $img){
             $car->liste_photos[] = $img->img_chemin;
         }
-        if(count($car->liste_photos)==0)
-            $car->liste_photos[] = '<null>'; /*prendre l'image par default*/
 
     }
 
@@ -502,6 +511,7 @@ class CarBusiness
      * @param $car_speed_box Boite à vitesse
      * @param $car_horses_count nombre de chevaux
      * @param $car_day_price prix par jour
+     * @param $car_week_prince prix par semaine
      * @param $car_month_price prix par mois
      * @param $car_year_price prix par an
      * @param $last_vehicles_page dernière page de l'affichage des véhicules
@@ -525,8 +535,10 @@ class CarBusiness
                                 $car_speed_box,
                                 $car_horses_count,
                                 $car_day_price,
+                                $car_week_price,
                                 $car_month_price,
-                                $car_year_price
+                                $car_year_price,
+                                $car_owner_account_ID
                                 )
     {
 
@@ -549,8 +561,10 @@ class CarBusiness
             'boite_vitesse' => $car_speed_box,
             'cv_fiscaux' =>$car_horses_count,
             'prix' => $car_day_price,
+            'prix_semaine' => $car_week_price,
             'prix_mois' =>$car_month_price,
-            'prix_an' => $car_year_price
+            'prix_an' => $car_year_price,
+            'fk_id_proprietaire' => $car_owner_account_ID,
          ]);
     }
 
@@ -576,6 +590,7 @@ class CarBusiness
      * @param $car_speed_box Boite à vitesse
      * @param $car_horses_count nombre de chevaux
      * @param $car_day_price prix par jour
+     * @param $car_week_price prix par semaine
      * @param $car_month_price prix par mois
      * @param $car_year_price prix par an
      *
@@ -598,11 +613,12 @@ class CarBusiness
                                  $car_speed_box,
                                  $car_horses_count,
                                  $car_day_price,
+                                 $car_week_price,
                                  $car_month_price,
                                  $car_year_price,
-
                                  $car_slug)
     {
+
         DB::table('jla_vehicul')->where('slug' , $car_slug)->update(
             [
                 'vehic_immat'=>$car_registration_number,
@@ -622,6 +638,7 @@ class CarBusiness
                 'boite_vitesse' => $car_speed_box,
                 'cv_fiscaux' =>$car_horses_count,
                 'prix' => $car_day_price,
+                'prix_semaine' => $car_week_price,
                 'prix_mois' =>$car_month_price,
                 'prix_an' => $car_year_price]
         );

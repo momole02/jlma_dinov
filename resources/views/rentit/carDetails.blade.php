@@ -4,6 +4,8 @@
     JeLoueMonAuto.ci - Détails sur la voiture
 @endsection
 
+
+
 @section('contents')
 
     @include('rentit/components/breadcrumbs', [
@@ -38,13 +40,10 @@
                         <h2 class="block-title"><span>Photos de la voiture</span></h2>
                         <div class="owl-carousel img-carousel">
 
-                            @php
-                                $exp_photos = explode(';' , $details->liste_photos);
-                            @endphp
+                            @foreach( $details->liste_photos as $photo)
+                                <div class="item"><a href="{{asset(Storage::url($photo))}}" data-gal="prettyPhoto">
 
-                            @foreach( $exp_photos as $photo)
-                                <div class="item"><a href="{{asset($photo)}}" data-gal="prettyPhoto">
-                                        <img class="img-responsive" src="{{asset($photo)}}" alt=""/></a>
+                                        <img class="img-responsive" src="{{asset(Storage::url($photo))}}" alt=""/></a>
                                 </div>
                             @endforeach
 

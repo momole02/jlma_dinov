@@ -37,8 +37,11 @@
 
 
                     @if(isset($vehicles))
+                        <form method="post" action="{{route('adminDoDropVehicleList')}}">
+                            @csrf
                         <table class="table table-hover">
                                 <tr>
+                                    <th>Sel.</th>
                                     <th>Immatriculation </th>
                                     <th>Marque/Modèle</th>
                                     <th>Type</th>
@@ -50,7 +53,7 @@
                                 </tr>
                                 @foreach( $vehicles as $vehicleEntry )
                                     <tr>
-
+                                        <td><input type="checkbox" name="vehicles-slugs[]" value="{{$vehicleEntry->slug}}"></td>
                                         <td>{{$vehicleEntry->vehic_immat}}</td>
                                         <td>{{$vehicleEntry->marque->libelle_marque.' '.$vehicleEntry->model->libelle_model}}</td>
                                         <td>{{$vehicleEntry->type->libelle_type_vehic}}</td>
@@ -62,6 +65,8 @@
                                     </tr>
                                 @endforeach
                         </table>
+                            <button type="submit" class="btn btn-danger">Supprimer séléction</button>
+                        </form>
                     @endif
 
 

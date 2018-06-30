@@ -15,7 +15,7 @@ use jlma\EventStock;
 use jlma\Front_Utils;
 
 
-define('NB_ITEMS_PER_PAGE' , '5');
+define('NB_ITEMS_PER_PAGE' , '10');
 
 class AdminController extends Controller
 {
@@ -461,11 +461,22 @@ class AdminController extends Controller
     public function eventCard( $slug )
     {
         $event=DB::table('jla_evenement')->where('slug',$slug);
-        if( $event->exists() ){
-            return view('admin/eventCard')
-                ->with('event',$event->first())
-                ->with('choosed_menu',$this->getTheGoodMenu());
+
+        if( $event!=null ) {
+            $accountBusiness = new AccountBusiness();
+            $accountData = $accountBusiness->loggedAccountData();
+
+            /* effacer la notification liée  */
+            EventStock::dropUserNotification( $accountData->slug , $slug );
+
+            if ($event->exists()) {
+                return view('admin/eventCard')
+                    ->with('event', $event->first())
+                    ->with('choosed_menu', $this->getTheGoodMenu());
+            }
         }
+
+        return response(null , 404);
     }
 
     public function usernotifs(  )
@@ -477,6 +488,20 @@ class AdminController extends Controller
         }
         return response()->json([]);
     }
+
+    public function notificationsList()
+    {
+        $accountBusiness = new AccountBusiness( );
+
+        $accountData = $accountBusiness->loggedAccountData() ;
+
+        $notifs =  EventStock::getUserNofications( $accountData->slug );
+
+        return view('admin/notifications')
+            ->with('choosed_menu' , $this->getTheGoodMenu())
+            ->with('notifs' , $notifs);
+    }
+
 
     ////////////////////////////////////////////////////////////TRAITEMENTS////////////////////////////////////////////////////////////
 
@@ -490,70 +515,68 @@ class AdminController extends Controller
     {
         $post = $request->all();
         $accountBusiness = new AccountBusiness();
-        if( $accountBusiness->isClientConnected() ){
 
-            $carBusiness = new CarBusiness();
-            $nbItemsPerPages = NB_ITEMS_PER_PAGE;
+        $carBusiness = new CarBusiness();
+        $nbItemsPerPages = NB_ITEMS_PER_PAGE;
 
-            $car_registration_number = $post['car-registration-number'];
-            $car_color = $post['car-color'];
-            $car_year = $post['car-year'];
-            $car_description = $post['car-description'];
-            $car_doors_count = $post['car-doors-count'];
-            $car_places_count = $post['car-places-count'];
-            /**TODO : Prendre en compte la saisie manuelle */
+        $car_registration_number = $post['car-registration-number'];
+        $car_color = $post['car-color'];
+        $car_year = $post['car-year'];
+        $car_description = $post['car-description'];
+        $car_doors_count = $post['car-doors-count'];
+        $car_places_count = $post['car-places-count'];
+        /**TODO : Prendre en compte la saisie manuelle */
 
-            /* l'user à spécifié une autre marque */
-            if( isset($post['car-other-brand']) && !empty($post['car-other-brand']) ){
-                /* si l'autre marque à été spécifiée on insert et on prend son ID */
-                $car_brand_id = $carBusiness->insertBrandAndGetID( $post['car-other-brand'] );
+        /* l'user à spécifié une autre marque */
+        if( isset($post['car-other-brand']) && !empty($post['car-other-brand']) ){
+            /* si l'autre marque à été spécifiée on insert et on prend son ID */
+            $car_brand_id = $carBusiness->insertBrandAndGetID( $post['car-other-brand'] );
 
-            }else {
-                $car_brand_id = $post['car-brand'];
-            }
-
-            if( isset($post['car-other-model']) && !empty($post['car-other-model']) ){
-                $car_model_id = $carBusiness->insertModelAndGetID( $post['car-other-model'] );
-            }else {
-                $car_model_id = $post['car-model'];
-            }
-
-            if( isset($post['car-other-type']) && !empty($post['car-other-type']) ){
-                $car_type_id=$carBusiness->insertTypeAndGetID( $post['car-other-type'] );
-            }else{
-                $car_type_id = $post['car-type'];
-            }
-
-
-            $car_km = $post['car-km'];
-            $car_country = $post['car-country'];
-            $car_registration_year = $post['car-registration-year'];
-            $car_consumption = $post['car-consumption'];
-            $car_energy =   isset( $post['car-other-energy'] ) ? $post['car-other-energy']: $post['car-energy'];
-            $car_speed_box = isset( $post['car-other-speed-box'] ) ? $post['car-other-speed-box'] :$post['car-speed-box'] ;
-            $car_horses_count = $post['car-horses-count'];
-            $car_day_price = $post['car-day-price'];
-            $car_month_price = $post['car-month-price'];
-            $car_year_price = $post['car-year-price'];
-
-            $carBusiness->addVehicle( $car_registration_number , $car_color , $car_year ,
-                $car_description , $car_doors_count , $car_places_count ,
-                $car_brand_id , $car_model_id , $car_type_id ,
-                $car_km , $car_country , $car_registration_year,
-                $car_consumption , $car_energy , $car_speed_box , $car_horses_count ,
-                $car_day_price,$car_month_price , $car_year_price);
-
-
-            $vehiclesCount = $carBusiness->carsCount();
-
-            $pageList = Front_Utils::getAllPages( $vehiclesCount, 'adminVehicles',  $nbItemsPerPages );
-
-            /* aller à la dernière page */
-            return redirect()->route('adminVehicles' , ['page' => count($pageList)-1]);
-
-
+        }else {
+            $car_brand_id = $post['car-brand'];
         }
 
+        if( isset($post['car-other-model']) && !empty($post['car-other-model']) ){
+            $car_model_id = $carBusiness->insertModelAndGetID( $post['car-other-model'] );
+        }else {
+            $car_model_id = $post['car-model'];
+        }
+
+        if( isset($post['car-other-type']) && !empty($post['car-other-type']) ){
+            $car_type_id=$carBusiness->insertTypeAndGetID( $post['car-other-type'] );
+        }else{
+            $car_type_id = $post['car-type'];
+        }
+
+        $car_km = $post['car-km'];
+        $car_country = $post['car-country'];
+        $car_registration_year = $post['car-registration-year'];
+        $car_consumption = $post['car-consumption'];
+        $car_energy =   isset( $post['car-other-energy'] ) ? $post['car-other-energy']: $post['car-energy'];
+        $car_speed_box = isset( $post['car-other-speed-box'] ) ? $post['car-other-speed-box'] :$post['car-speed-box'] ;
+        $car_horses_count = $post['car-horses-count'];
+        $car_day_price = $post['car-day-price'];
+        $car_week_price = $post['car-week-price'];
+        $car_month_price = $post['car-month-price'];
+        $car_year_price = $post['car-year-price'];
+        $loggedAccountData = $accountBusiness->loggedAccountData() ;
+
+
+        $carBusiness->addVehicle( $car_registration_number , $car_color , $car_year ,
+            $car_description , $car_doors_count , $car_places_count ,
+            $car_brand_id , $car_model_id , $car_type_id ,
+            $car_km , $car_country , $car_registration_year,
+            $car_consumption , $car_energy , $car_speed_box , $car_horses_count ,
+            $car_day_price,$car_week_price,$car_month_price , $car_year_price ,
+            $loggedAccountData->id_compte);
+
+
+        $vehiclesCount = $carBusiness->carsCount();
+
+        $pageList = Front_Utils::getAllPages( $vehiclesCount, 'adminVehicles',  $nbItemsPerPages );
+
+        /* aller à la dernière page */
+        return redirect()->route('adminVehicles' , ['page' => count($pageList)-1]);
 
     }
 
@@ -604,6 +627,7 @@ class AdminController extends Controller
         $car_speed_box = isset( $post['car-other-speed-box'] ) ? $post['car-other-speed-box'] :$post['car-speed-box'] ;
         $car_horses_count = $post['car-horses-count'];
         $car_day_price = $post['car-day-price'];
+        $car_week_price = $post['car-week-price'];
         $car_month_price = $post['car-month-price'];
         $car_year_price = $post['car-year-price'];
 
@@ -614,7 +638,7 @@ class AdminController extends Controller
             $car_brand_id , $car_model_id , $car_type_id ,
             $car_km , $car_country , $car_registration_year,
             $car_consumption , $car_energy , $car_speed_box , $car_horses_count ,
-            $car_day_price,$car_month_price , $car_year_price,$car_slug);
+            $car_day_price,$car_week_price,$car_month_price , $car_year_price,$car_slug);
 
 
         /* aller à la dernière page visitée*/
@@ -633,6 +657,23 @@ class AdminController extends Controller
         $carBusiness->dropVehicleBySlug( $slug );
 
         $adminBreadcrumb = new AdminBreadcrumb();
+        return $adminBreadcrumb->redirectLast( route('adminVehicles') );
+    }
+
+    /*
+     *  Supprime une liste de véhicule
+     * */
+    public function doDropVehicleList( Request $req )
+    {
+        $req->validate(['vehicles-slugs'=>'required']);
+
+        $vehicleSlugs = $req->post('vehicles-slugs');
+        $carBusiness = new CarBusiness();
+        $adminBreadcrumb = new AdminBreadcrumb( );
+
+        foreach( $vehicleSlugs as $slug )
+            $carBusiness->dropVehicleBySlug( $slug );
+
         return $adminBreadcrumb->redirectLast( route('adminVehicles') );
     }
 
@@ -800,6 +841,21 @@ class AdminController extends Controller
 
     }
 
+    public function doDropRentingList( Request $req )
+    {
+        $req->validate(['rentings-slugs' => 'required']);
+        
+        $carBusiness = new CarBusiness( ) ;
+        $rentingsSlug = $req->post('rentings-slugs');
+
+        $adminBreadcrumbs = new AdminBreadcrumb( );
+
+        foreach( $rentingsSlug as $slug )
+            $carBusiness->dropRenting( $slug );
+        
+        return $adminBreadcrumbs->redirectLast( route('adminRentings') );
+    }
+
     public function acceptRenting( $slug )
     {
         $carBusiness = new CarBusiness();
@@ -845,6 +901,22 @@ class AdminController extends Controller
     }
 
     /*
+     * Supprime une liste de clients
+    */
+    public function doDropClientList( Request $req )
+    {
+        $req->validate(['clients-slugs' => 'required']);
+
+        $clientsSlugs = $req->post('clients-slugs');
+        $accountBusiness = new AccountBusiness( );
+        $adminBreadcrumb = new AdminBreadcrumb( );
+
+        foreach( $clientsSlugs as $slug ){
+            $accountBusiness->dropClient( $slug );
+        }
+        return $adminBreadcrumb->redirectLast( route('adminClients') );
+    }
+    /*
      * Recherche un client
     */
     public function doSearchClients( Request $req )
@@ -883,6 +955,9 @@ class AdminController extends Controller
         $accountBusiness->zeroPassword( $slug );
         return $adminBreadcrumb->redirectLast( route('adminClientCard',['slug'=>$slug]) );
     }
+
+
+
 
     public function doAddTestimonial( Request $req )
     {
@@ -1055,8 +1130,21 @@ class AdminController extends Controller
 
         return $adminBreadcrumb->redirectLast( session()->previousUrl() );
     }
-    
 
+    public function doArchiveEventList( Request $req )
+    {
+        $req->validate( ['events-slugs'=>'required']  );
+
+        $eventsSlugs = $req->post('events-slugs');
+
+        $adminBreadcrumb = new AdminBreadcrumb( );
+
+        foreach( $eventsSlugs as $slug ){
+            $this->doArchiveEvent( $slug );
+        }
+
+        return $adminBreadcrumb->redirectLast( route('adminLogs') );
+    }
 
 }
 

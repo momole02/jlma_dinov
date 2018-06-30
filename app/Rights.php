@@ -33,6 +33,7 @@ class Rights
         'adminDoDropStat' => 'root',
         'adminLogs' => 'root',
         'eventCard' => 'root',
+        'notificationsList' => 'root',
 
         'adminDoSearchClient' => 'root',
         'adminDoAddVehicleBrand' => 'root',
@@ -42,7 +43,7 @@ class Rights
         'adminDoAddTestimonial' => 'root',
         'adminDoDropTestimonial' => 'root',
         'adminDoAddCustomerService' => 'root',
-        'adminDoDropCustomerService' => 'root'
+
         ];
 
     /* verifie si la route est autorisée pour l'utilisateur actuel */
