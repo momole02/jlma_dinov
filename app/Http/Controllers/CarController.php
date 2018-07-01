@@ -39,13 +39,7 @@ class CarController extends Controller
                 ->with('page' , $page);
     }
 
-    /**
-     * @brief Formulaire de recherche avancée d'offres
-    */
-    public function advCarSearch()
-    {
-        return view('rentit/advCarSearchPage');
-    }
+
     /**
      * @brief Effectue une nouvelle recherche d'offre
     */
@@ -108,22 +102,7 @@ class CarController extends Controller
 
     }
 
-    /**
-     * @brief affiche le formulaire de location de voiture
-     */
-    public function carLeasing( $carSlug='no-slug' )
-    {
-        $acc_business = new AccountBusiness();
 
-        if( $acc_business->isClientConnected() ) {
-            return view('cars/carLeasing')->with('carSlug', $carSlug);
-        }else{
-            return redirect()->route('login')->with('data' , [
-                'success' => false,
-                'result' => 'Inscrivez vous ou connectez vous pour louer'
-            ]);
-        }
-    }
 
     /**
      * @brief Effecute la requête de location de véhicule

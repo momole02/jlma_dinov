@@ -61,6 +61,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
         'jlma.breadcrumb'=>\jlma\Http\Middleware\BreadcrumbMiddleware::class,
+        'jlma.front.breadcrumb'=>\jlma\Http\Middleware\FrontBCMiddleware::class,
         'jlma.checkauth'=>\jlma\Http\Middleware\CheckAuth::class
     ];
 }

@@ -49,6 +49,11 @@
                                     <i class="fa fa-check-circle"></i>
                                     <b>Email du locataire: </b>{{$renting->clientMail}}
                                 </div >
+
+                                <div style="padding-bottom: 10px">
+                                    <i class="fa fa-check-circle"></i>
+                                    <b>Raison de la location: </b>{{$renting->loc_description}}
+                                </div >
                                 <div style="padding-bottom: 10px">
                                     <i class="fa fa-check-circle"></i>
                                     <b>Date de début de la location: </b><i style="color:green">{{\jlma\Front_Utils::formatDate($renting->loc_datedebut)}}</i>

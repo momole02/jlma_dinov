@@ -68,18 +68,27 @@ $nb_pages =(int)(ceil($cars_count/$nb_cars_per_page));
                                                     <!-- Swiper -->
                                                     <div class="swiper-container" id="swiperSlider{{$page+1}}x{{$index+1}}">
                                                         <div class="swiper-wrapper">
-                                                            @foreach( $current_car['photos'] as $photo )
+
+                                                            @if( count( $current_car['photos'] )==0 )
                                                                 <div class="swiper-slide">
-                                                                    @if($photo !=='<null>')
-                                                                        <a class="btn btn-zoom" href="{{asset($photo)}}" data-gal="prettyPhoto"><i class="fa fa-arrows-h"></i></a>
-                                                                        <a href="{{asset($photo)}}" data-gal="prettyPhoto"><img class="img-responsive" src="{{asset($photo)}}" alt=""/></a>
-                                                                    @else
-                                                                        @php $photo = 'rentit/img/preview/cars/car-600x426x1.jpg'; @endphp
-                                                                        <a class="btn btn-zoom" href="{{asset($photo)}}" data-gal="prettyPhoto"><i class="fa fa-arrows-h"></i></a>
-                                                                        <a href="{{asset($photo)}}" data-gal="prettyPhoto"><img class="img-responsive" src="{{asset($photo)}}" alt=""/></a>
-                                                                    @endif
+                                                                    @php $photoUrl = asset('rentit/img/preview/cars/car-600x426x1.jpg'); @endphp
+                                                                    <a class="btn btn-zoom" href="{{$photoUrl}}" data-gal="prettyPhoto"><i class="fa fa-arrows-h"></i></a>
+                                                                    <a href="{{$photoUrl}}" data-gal="prettyPhoto"><img class="img-responsive" src="{{$photoUrl}}" alt=""/></a>
                                                                 </div>
-                                                            @endforeach
+                                                            @else
+
+                                                                @foreach( $current_car['photos'] as $photo )
+                                                                    @php
+                                                                        $photoUrl=asset(Storage::url($photo));
+                                                                    @endphp
+
+                                                                    <div class="swiper-slide">
+                                                                        <a class="btn btn-zoom" href="{{$photoUrl}}" data-gal="prettyPhoto"><i class="fa fa-arrows-h"></i></a>
+                                                                        <a href="{{$photoUrl}}" data-gal="prettyPhoto"><img class="img-responsive" src="{{$photoUrl}}" alt=""/></a>
+                                                                    </div>
+                                                                @endforeach
+                                                            @endif
+
 
                                                         </div>
 

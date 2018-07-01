@@ -2,7 +2,7 @@
 
 
 @section('title')
-    -- JeLoueMonAuto -- Comment ça marche ?
+    JLMA - Comment ça marche ?
 @endsection
 
 @section('contents')

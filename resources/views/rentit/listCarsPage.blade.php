@@ -2,7 +2,7 @@
 
 
 @section('title')
-    JeLoueMonAuto.ci - Catalogue des voitures
+    JLMA - Catalogue des voitures
 @endsection
 
 @section('contents')

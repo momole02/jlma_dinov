@@ -1,7 +1,7 @@
 @extends('rentit/layout')
 
 @section('title')
-    JeLoueMonAuto.ci - Service de location de vehicules
+    JLMA - Service de location de vehicules
 @endsection
 
 @section('contents')
@@ -79,42 +79,38 @@
     </section>
     <!-- /PAGE -->
 
-    <!-- PAGE-->
-    @include('rentit/components/index/carOffers')
-    <!-- /PAGE-->
 
     <!-- PAGE -->
     <section class="page-section testimonials">
         <div class="container wow fadeInUp" data-wow-offset="70" data-wow-delay="500ms">
             <div class="testimonials-carousel">
                 <div class="owl-carousel" id="testimonials">
-                    <div class="testimonial">
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <img class="media-object testimonial-avatar" src="{{ url('rentit/img/preview/avatars/testimonial-140x140x1.jpg') }}" alt="Testimonial avatar">
-                                </a>
-                            </div>
-                            <div class="media-body">
-                                <div class="testimonial-text">Les locations et les déplacements sont 100% sécurisés</div>
-                                <div class="testimonial-name">Guy Samuel BOROGONE  <span class="testimonial-position">Concepteur de JeLoueMonAuto.ci</span></div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="testimonial">
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <img class="media-object testimonial-avatar" src="{{ url('rentit/img/preview/avatars/testimonial-140x140x1.jpg') }}" alt="Testimonial avatar">
-                                </a>
+                    @isset($testimonials)
+
+
+                        @for( $i=0;$i<min(6,count($testimonials));++$i)
+
+                            @php
+                                $testimonialEntry = $testimonials[$i];
+                            @endphp
+
+                            <div class="testimonial">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#">
+                                            <img class="media-object testimonial-avatar " style="width:170px;" src="{{ url($testimonialEntry->photo_tem) }}" alt="Testimonial avatar">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="testimonial-text">{{$testimonialEntry->contenu_tem}}</div>
+                                        <div class="testimonial-name">{{$testimonialEntry->nom_tem}} -  <span class="testimonial-position">{{$testimonialEntry->prof_tem}}</span></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="media-body">
-                                <div class="testimonial-text">Ce service est le fruit d'un travail acharné et passionné</div>
-                                <div class="testimonial-name">Marc-Arnaud AYENON  <span class="testimonial-position">Développeur DINOV</span></div>
-                            </div>
-                        </div>
-                    </div>
+                        @endfor
+                    @endisset
+
                 </div>
             </div>
         </div>
@@ -130,14 +126,6 @@
 
     <!-- PAGE-->
     @include('rentit/components/index/faqs')
-    <!-- /PAGE-->
-
-    <!-- PAGE-->
-    @include('rentit/components/index/findCar')
-    <!-- /PAGE-->
-
-    <!-- PAGE-->
-    @include('rentit/components/index/subscribe')
     <!-- /PAGE-->
 
     <!-- PAGE-->

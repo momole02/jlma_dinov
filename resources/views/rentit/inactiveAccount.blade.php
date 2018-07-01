@@ -2,7 +2,7 @@
 
 
 @section('title')
-    JeLoueMonAuto.ci - Compte inactif
+    JLMA - Compte inactif
 @endsection
 
 @section('contents')

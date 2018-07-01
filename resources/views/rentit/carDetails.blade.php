@@ -1,7 +1,7 @@
 @extends('rentit/layout')
 
 @section('title')
-    JeLoueMonAuto.ci - Détails sur la voiture
+    JLMA - Détails sur la voiture
 @endsection
 
 

@@ -1,7 +1,7 @@
 @extends('rentit/layout')
 
 @section('title')
-    JeLoueMonAuto.ci - Tentative d'inscription
+    JLMA - Tentative d'inscription
 @endsection
 
 @section('contents')

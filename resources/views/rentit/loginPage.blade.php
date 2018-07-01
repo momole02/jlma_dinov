@@ -1,7 +1,7 @@
 @extends('rentit/layout')
 
 @section('title')
-    JeLoueMonAuto.ci - Connexion
+    JLMA - Connexion
 @endsection
 
 @section('contents')

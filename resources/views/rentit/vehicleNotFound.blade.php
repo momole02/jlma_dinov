@@ -2,7 +2,7 @@
 
 
 @section('title')
-    JeLoueMonAuto.ci - Vehicule non trouvé
+    JLMA - Vehicule non trouvé
 @endsection
 
 @section('contents')

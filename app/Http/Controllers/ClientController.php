@@ -16,64 +16,7 @@ use jlma\CarBusiness;
 
 class ClientController extends Controller
 {
-    /**
-     * @brief Affiche le formulaire de création d'un nouveau formulaire
-     */
-    public function createClient()
-    {
-        return view('rentit/signuppage');
-    }
 
-    /**
-     * @brief Traite une requête d'ajout de propriétaire(inscription)
-    */
-    public function doCreateClient( Request $req )
-    {
-
-        /* lancer la validation du formulaire */
-
-        $post_data=$req->all();
-
-        $validator = Validator::make($req->all() , [
-            'client-cni-number' => 'required|min:3',
-            'client-last-name' => 'required|min:3',
-            'client-first-name' => 'required|min:3',
-            'client-live-place' => 'required',
-            'client-mail' => 'required',
-            'client-contact' => 'required',
-            'client-civility' => 'required',
-            'client-birth-date' => 'required',
-            'client-pseudo' => 'required|min:3',
-            'client-password' => 'required|min:6',
-            'client-password-conf'=> 'required|min:6'
-        ]);
-
-
-        if( $validator->fails() ){
-
-            return redirect()->route('login')->with('post_data',$post_data)->with('errors', $validator->errors());
-        }
-
-        /* lancer l'inscription*/
-        $parameters = $req->all();             /* recupérer toutes les données du formulaire */
-        $business = new AccountBusiness( );
-
-        /// Verifier si le pseudo n'est pas déja pris
-
-        if( $business->pseudoExists( $parameters['client-pseudo'] ) ){ /* le pseudo existe déja */
-            return redirect()->route('login')->with('data' , [
-                'success' => false,
-                'result' => 'le pseudo que vous avez choisi existe déja'
-            ])->with('post_data' , $req->all());
-        }
-
-        $data = $business->register($parameters); /* sauvegarder dans la base de données */
-
-        if( $data['success'] === true)
-            return redirect()->route('home')->with('data',$data);
-        else
-            return redirect()->route('login')->with('data',$data)->with('post_data' , $req->all());
-    }
     /**
      * @brief Affiche le formulaire de login
      */

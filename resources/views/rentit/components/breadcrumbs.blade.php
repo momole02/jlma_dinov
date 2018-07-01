@@ -6,17 +6,26 @@
         </div>
         <ul class="breadcrumb">
 
-            @if(isset($pages))
-                @foreach($pages as $page_name => $page_info)
-                    <li {{ ($page_info['active']==true) ? 'class=active' : '' }}>
-                        @if($page_info['active']==false)
-                            <a href="{{ $page_info['link'] }}" >{{ $page_name }}</a>
-                        @else
-                            {{ $page_name }}
-                        @endif
-                    </li>
-                @endforeach
+
+
+            @php
+                $frontBreadcrumb = new \jlma\FrontBreadcrumb();
+                $breadcrumbData = $frontBreadcrumb->allHistory( );
+            @endphp
+
+
+            @if( $breadcrumbData!=null )
+                @php($count=count($breadcrumbData))
+                @for( $i=0;$i<$count;++$i )
+                    @php( $breadcrumbDataEntry=$breadcrumbData[$i] )
+                    @if( $i!=$count-1 )
+                        <li><a href="{{url($breadcrumbDataEntry['url'])}}">{{$breadcrumbDataEntry['name']}}</a></li>
+                    @else
+                        <li class="active">{{$breadcrumbDataEntry['name']}}</li>
+                    @endif
+                @endfor
             @endif
+
 
             {{-- <li><a href="#">Home</a></li>
             <li><a href="#">Pages</a></li>

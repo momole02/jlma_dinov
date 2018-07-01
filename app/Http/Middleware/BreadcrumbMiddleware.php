@@ -25,12 +25,10 @@ class BreadcrumbMiddleware
     public function handle($request, Closure $next)
     {
 
-        $acountBusiness = new AccountBusiness();
-        if( $acountBusiness->isClientConnected() ){
 
-            $adminBreadcrumb = new AdminBreadcrumb();
-            $adminBreadcrumb->insertHistoryPage( $request->route()->getName() , $request->path() );
-        }
+        $adminBreadcrumb = new AdminBreadcrumb();
+        $adminBreadcrumb->insertHistoryPage( $request->route()->getName() , $request->path() );
+
         return $next($request);
     }
 }

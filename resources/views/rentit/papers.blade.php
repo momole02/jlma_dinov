@@ -2,7 +2,7 @@
 
 
 @section('title')
-    -- JeLoueMonAuto.ci -- Pièces
+    JLMA - Pièces
 @endsection
 
 

@@ -17,20 +17,14 @@ Route::get('/',[
         'as' => 'home',
         'uses' => 'HomeController@index'
     ]
-);
+)->middleware('jlma.front.breadcrumb');
 
 /** Route de la page comment ça marche*/
 Route::get('/howitworks',[
         'as' => 'howitworks',
         'uses' => 'HomeController@howitworks'
     ]
-);
-
-/** Route du formulaire d'inscription d'un propriétaire*/
-Route::get('/createClient' ,[
-   'as' => 'createClient',
-   'uses' => 'ClientController@createClient'
-]);
+)->middleware('jlma.front.breadcrumb');
 
 
 
@@ -38,20 +32,15 @@ Route::get('/createClient' ,[
 Route::get('/showCars/{page?}' , [
    'as' => 'showCars',
    'uses' => 'CarController@showCars'
-]);
+])->middleware('jlma.front.breadcrumb');
 
 
 /** Route du l'affichage des détails sur une voiture*/
 Route::get('/carDetails/{slug}' , [
    'as' => 'carDetails',
    'uses' => 'CarController@carDetails'
-]);
+])->middleware('jlma.front.breadcrumb');
 
-/** Route du formulaire de location de voiture*/
-Route::get('/carLeasing/{carSlug}' , [
-    'as' => 'carLeasing',
-    'uses' => 'CarController@carLeasing'
-]);
 
 /** Route de la requête de location des voitures */
 Route::post('/doCarLeasing' , [
@@ -63,18 +52,19 @@ Route::post('/doCarLeasing' , [
 Route::get('/login' , [
     'as' => 'login',
     'uses' => 'ClientController@login'
-]);
+])->middleware('jlma.front.breadcrumb');
 
 /** Route de requête de connexion */
 Route::post('/doLogin' , [
     'as' => 'doLogin',
     'uses' => 'ClientController@doLogin'
 ]);
+
 /** Route de l'espace membre*/
 Route::get('/members' , [
    'as' => 'members',
    'uses' => 'ClientController@members'
-]);
+])->middleware('jlma.front.breadcrumb');
 
 /** Route de deconnexion */
 Route::get('/logout' , [
@@ -93,7 +83,7 @@ Route::get('/dropLeasing/{slug}' ,[
 Route::get('/editProfile' , [
     'as' => 'editProfile',
     'uses' => 'ClientController@editProfile'
-]);
+])->middleware('jlma.front.breadcrumb');
 
 /** Route de requête d'édition du profil */
 Route::post('/doEditProfile' ,[
@@ -128,26 +118,20 @@ Route::post('/doSearchCars' , [
 ]);
 
 
-/** Route de recherche avancée de vehicules*/
-Route::get('/advCarSearch' ,[
-   'as' => 'advCarSearch',
-   'uses' => 'CarController@advCarSearch'
-]);
-
 
 /** Route d'affichage du resultat de la recherche
 */
 Route::get('/carSearchResults/{page?}' , [
     'as' => 'carSearchResults',
     'uses' => 'CarController@carSearchResults'
-]);
+])->middleware('jlma.front.breadcrumb');
 
 
 /** Route du la requête du formulaire d'inscription d'un propriétaire*/
 Route::post('/doSignup1' , [
     'as' => 'doSignup1',
     'uses' => 'ClientController@doSignup1'
-]);
+])->middleware('jlma.front.breadcrumb');
 
 /**
  * Route du formulaire de soumission du CNI(étape 2 de l'inscription)
@@ -155,12 +139,12 @@ Route::post('/doSignup1' , [
 Route::get('/signupStep2',[
     'as' => 'signupStep2',
     'uses' => 'ClientController@signupStep2'
-]);
+])->middleware('jlma.front.breadcrumb');
 /* ... requête de traitement du formulaire de l'étape 2*/
 Route::post('/doSignup2',[
     'as' => 'doSignup2',
     'uses' => 'ClientController@doSignup2'
-]);
+])->middleware('jlma.front.breadcrumb');
 
 /* ... retour à parti de la seconde étape*/
 Route::get('/backFromSignup2',[

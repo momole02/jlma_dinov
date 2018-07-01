@@ -1,7 +1,7 @@
 @extends('rentit/components/sidepage')
 
 @section('title')
-    -- JeLoueMonAuto -- Details du vehicule
+    JLMA - Details du vehicule
 @endsection
 
 @section('breadcrumbs')
@@ -111,40 +111,6 @@
     </div>
     <!-- /widget formulaire de reservation-->
 
-    <!-- widget testimonials -->
-    <div class="widget shadow">
-        <div class="widget-title">Testimonials</div>
-        <div class="testimonials-carousel">
-            <div class="owl-carousel" id="testimonials">
-                <div class="testimonial">
-                    <div class="media">
-                        <div class="media-body">
-                            <div class="testimonial-text">Vivamus eget nibh. Etiam cursus leo vel metus. Nulla facilisi. Aenean nec eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.</div>
-                            <div class="testimonial-name">John Doe <span class="testimonial-position">Co- founder at Rent It</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial">
-                    <div class="media">
-                        <div class="media-body">
-                            <div class="testimonial-text">Vivamus eget nibh. Etiam cursus leo vel metus. Nulla facilisi. Aenean nec eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.</div>
-                            <div class="testimonial-name">John Doe <span class="testimonial-position">Co- founder at Rent It</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial">
-                    <div class="media">
-                        <div class="media-body">
-                            <div class="testimonial-text">Vivamus eget nibh. Etiam cursus leo vel metus. Nulla facilisi. Aenean nec eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.</div>
-                            <div class="testimonial-name">John Doe <span class="testimonial-position">Co- founder at Rent It</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /widget testimonials -->
-
 
 @endsection
 
@@ -175,18 +141,34 @@
         </div>
         <div class="post-body">
             <div class="post-excerpt">
-                <div>
-                <ul class="list-icons">
-                    <li><i class="fa fa-arrow-circle-right"></i><b>Immatriculation</b> : {{ $details->vehic_immat }} </li>
-                    <li><i class="fa fa-arrow-circle-right"></i><b>Couleur</b> :{{ $details->couleur }} </li>
-                    <li><i class="fa fa-arrow-circle-right"></i><b>Année</b>:{{ $details->annee }} </li>
-                    <li><i class="fa fa-arrow-circle-right"></i><b>Année immatriculation</b>: {{ $details->annee_immat }} </li>
-                    <li><i class="fa fa-arrow-circle-right"></i><b>Modèle</b>: {{ nl2br($details->model->libelle_model) }} </li>
-                    <li><i class="fa fa-arrow-circle-right"></i><b>Marque </b>: {{ nl2br($details->marque->libelle_marque) }} </li>
-                    <li><i class="fa fa-arrow-circle-right"></i><b>Type </b>: {{ nl2br($details->type->libelle_type_vehic) }} </li>
-                </ul>
-                    <hr>
-                    <p><i>{{ nl2br($details->description) }}</i></p>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <ul class="list-icons">
+                            <li><i class="fa fa-arrow-circle-right"></i><b>Immatriculation</b> : {{ $details->vehic_immat }} </li>
+                            <li><i class="fa fa-arrow-circle-right"></i><b>Couleur</b> :<span style="color:{{ $details->couleur }};background:{{ $details->couleur }}">*******</span></li>
+                            <li><i class="fa fa-arrow-circle-right"></i><b>Année</b>:{{ $details->annee }} </li>
+                            <li><i class="fa fa-arrow-circle-right"></i><b>Année immatriculation</b>: {{ $details->annee_immat }} </li>
+                            <li><i class="fa fa-arrow-circle-right"></i><b>Modèle</b>: {{ $details->model->libelle_model }} </li>
+                            <li><i class="fa fa-arrow-circle-right"></i><b>Marque </b>: {{ $details->marque->libelle_marque }} </li>
+                            <li><i class="fa fa-arrow-circle-right"></i><b>Type </b>: {{ $details->type->libelle_type_vehic }} </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="list-icons">
+
+                            <li><i class="fa fa-arrow-circle-right"></i><b>Pays</b> : {{ $details->pays}} </li>
+                            <li><i class="fa fa-arrow-circle-right"></i><b>Consommation</b> {{$details->consommation}}</li>
+                            <li><i class="fa fa-arrow-circle-right"></i><b>Type d'énergie</b>:{{ $details->energie}} </li>
+                            <li><i class="fa fa-arrow-circle-right"></i><b>Boite à vitesse</b>: {{ $details->boite_vitesse }} </li>
+                            <li style="color:red"><i class="fa fa-arrow-circle-right"></i><b>Prix /jour</b>: {{$details->prix}} F/CFA</li>
+                            <li style="color:red"><i class="fa fa-arrow-circle-right"></i><b>Prix /semaine</b>: {{$details->prix_semaine}} F/CFA</li>
+                            <li style="color:red"><i class="fa fa-arrow-circle-right"></i><b>Prix /mois</b>: {{$details->prix_mois}} F/CFA</li>
+                            <li style="color:red"><i class="fa fa-arrow-circle-right"></i><b>Prix /an</b>: {{$details->prix_an}} F/CFA</li>
+                        </ul>
+                    </div>
+                <hr>
+                    <b>Description du véhicule</b>
+                <pre>{{ $details->description }}</pre>
                 </div>
             </div>
         </div>

@@ -161,7 +161,7 @@ desired effect
                                         <a class="btn btn-primary" href="{{route('adminVehicles')}}"><span style="color:white">Véhicules</span></a>
                                     </div>
                                     <div class="col-xs-6 text-center">
-                                        <a " class="btn btn-primary" href="{{route('adminRentings')}}"><span style="color:white">Reservations</span></a>
+                                        <a class="btn btn-primary" href="{{route('adminRentings')}}"><span style="color:white">Reservations</span></a>
                                     </div>
                                 </div>
                                 <!-- /.row -->

@@ -1,7 +1,7 @@
 @extends('rentit/layout')
 
 @section('title')
-    JeLoueMonAuto.ci - Espace membres
+    JLMA - Espace membres
 @endsection
 
 @section('contents')

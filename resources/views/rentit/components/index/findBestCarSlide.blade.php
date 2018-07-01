@@ -1,4 +1,4 @@
-<section class="page-section no-padding slider">
+<section id="find-best" class="page-section no-padding slider">
     <div class="container full-width">
 
         <div class="main-slider">
