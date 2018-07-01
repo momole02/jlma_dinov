@@ -82,12 +82,12 @@
                                     <li ><a href="{{$prefix}}#find-best">Accueil</a></li>
                                     <li ><a href="{{$prefix}}#who-we-are">Qui sommes nous ?</a></li>
                                     <li ><a href="{{$prefix}}#our-cars">Catalogue</a></li>
-                                    <li ><a href="{{$prefix}}#" style="color:#b0b100">Covoiturage</a></li>
 
                                     <!-- TODO : Remplacer par espace membres au cas ou un utilisateur est connecté-->
                                     @if( Session::has('client-account-data') )
-                                    <li ><a href="{{ route('members') }}">Espace locataires</a></li>
-                                    <li ><a href="{{ route('logout') }}"><span style="color:red">Deconnecter</span></a></li>
+                                        <li ><a href="{{ route('members') }}">Espace locataires</a></li>
+                                        <li ><a href="{{ route('adminDashboard') }}">Admin</a></li>
+                                        <li ><a href="{{ route('logout') }}"><span style="color:red">Deconnecter</span></a></li>
                                     @else
                                     <li ><a href="{{ route('members') }}">Login</a></li>
                                     @endif
