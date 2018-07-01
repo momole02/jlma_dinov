@@ -221,59 +221,58 @@ Route::get('/admin/doLogout',[
 
 Route::get('/admin/vehicles/{page?}',[
    'as' => 'adminVehicles',
-   'uses' => 'AdminController@vehicles'
+   'uses' => 'Admin\VehiclesController@vehicles'
 ])->middleware('jlma.checkauth' , 'jlma.breadcrumb');
 
 Route::get('/admin/editVehicle/{slug}',[
    'as' => 'adminEditVehicle',
-   'uses' => 'AdminController@editVehicle'
+   'uses' => 'Admin\VehiclesController@editVehicle'
 ])->middleware('jlma.checkauth' , 'jlma.breadcrumb');
-
 
 
 Route::get('/admin/dropVehicle/{slug}',[
     'as' => 'adminDropVehicle',
-    'uses' => 'AdminController@dropVehicle'
+    'uses' => 'Admin\VehiclesController@dropVehicle'
 ])->middleware('jlma.checkauth');
 
 Route::get('/admin/vehicleImages/{slug}',[
     'as' => 'adminVehicleImages',
-    'uses' => 'AdminController@vehicleImages'
+    'uses' => 'Admin\VehiclesController@vehicleImages'
 ])->middleware('jlma.checkauth' , 'jlma.breadcrumb');
 
 Route::get('/admin/dropVehicleImage/{id}',[
     'as' => 'adminDropVehicleImage',
-    'uses' => 'AdminController@dropVehicleImage'
+    'uses' => 'Admin\VehiclesController@dropVehicleImage'
 ])->middleware('jlma.checkauth');
 
 Route::get('/admin/dropVehicleDocument/{docSlug}',[
     'as' => 'adminDropVehicleDocument',
-    'uses' => 'AdminController@dropVehicleDocument'
+    'uses' => 'Admin\VehiclesController\@dropVehicleDocument'
 ])->middleware('jlma.checkauth');
 
 Route::get('/admin/rentings',[
     'as' => 'adminRentings',
-    'uses' => 'AdminController@rentings'
+    'uses' => 'Admin\RentingsController@rentings'
 ])->middleware('jlma.checkauth' , 'jlma.breadcrumb');
 
 Route::get('/admin/dropRenting/{slug}',[
     'as' => 'adminDropRenting',
-    'uses' => 'AdminController@dropRenting'
+    'uses' => 'Admin\RentingsController@dropRenting'
 ])->middleware('jlma.checkauth');
 
 Route::get('/admin/acceptRenting/{slug}',[
     'as' => 'adminAcceptRenting',
-    'uses' => 'AdminController@acceptRenting'
+    'uses' => 'Admin\RentingsController@acceptRenting'
 ])->middleware('jlma.checkauth');
 
 Route::get('/admin/rentingCard/{slug}',[
     'as' => 'adminRentingCard',
-    'uses' => 'AdminController@rentingCard'
+    'uses' => 'Admin\RentingsController@rentingCard'
 ])->middleware('jlma.checkauth' , 'jlma.breadcrumb');
 
 Route::get('/admin/searchRentings',[
     'as' => 'adminSearchRentings',
-    'uses' => 'AdminController@searchRentings'
+    'uses' => 'Admin\RentingsController@searchRentings'
 ])->middleware('jlma.checkauth','jlma.breadcrumb');
 
 
@@ -281,100 +280,100 @@ Route::get('/admin/searchRentings',[
 
 Route::get('/admin/clients/{page?}',[
     'as' => 'adminClients',
-    'uses' => 'AdminController@clients'
+    'uses' => 'Admin\ClientsController@clients'
 ])->middleware('jlma.checkauth','jlma.breadcrumb');
 
 Route::get('/admin/searchClients',[
     'as' => 'adminSearchClients',
-    'uses' => 'AdminController@searchClients'
+    'uses' => 'Admin\ClientsController@searchClients'
 ])->middleware('jlma.checkauth','jlma.breadcrumb');
 
 
 Route::get('/admin/clientCard/{slug}',[
     'as' => 'adminClientCard',
-    'uses' => 'AdminController@clientCard'
+    'uses' => 'Admin\ClientsController@clientCard'
 ])->middleware('jlma.checkauth','jlma.breadcrumb');
 
 Route::get('/admin/doDropClient/{slug}',[
     'as' => 'adminDoDropClient',
-    'uses' => 'AdminController@doDropClient'
+    'uses' => 'Admin\ClientsController@doDropClient'
 ])->middleware('jlma.checkauth');
 
 Route::get('/admin/doActivateAccount/{slug}/{status}',[
     'as' => 'adminDoActivateAccount',
-    'uses' => 'AdminController@doActivateAccount'
+    'uses' => 'Admin\ClientsController@doActivateAccount'
 ])->middleware('jlma.checkauth');
 
 Route::get('/admin/doZeroPassword/{slug}',[
     'as' => 'adminDoZeroPassword',
-    'uses' => 'AdminController@doZeroPassword'
+    'uses' => 'Admin\ClientsController@doZeroPassword'
 ])->middleware('jlma.checkauth');
 
 
 Route::get('/admin/vehiclesBrands',[
     'as' => 'adminVehiclesBrands',
-    'uses' => 'AdminController@vehiclesBrands'
+    'uses' => 'Admin\VehiclesController@vehiclesBrands'
 ])->middleware('jlma.checkauth','jlma.breadcrumb');
 
 Route::get('/admin/testimonials',[
     'as' => 'adminTestimonials',
-    'uses' => 'AdminController@testimonials'
+    'uses' => 'Admin\ContentController@testimonials'
 ])->middleware('jlma.checkauth','jlma.breadcrumb');
 
 Route::get('/admin/doDropTestimonial/{slug}',[
     'as' => 'adminDoDropTestimonial',
-    'uses' => 'AdminController@doDropTestimonial'
+    'uses' => 'Admin\ContentController@doDropTestimonial'
 ])->middleware('jlma.checkauth');
 
 
 Route::get('/admin/faqs',[
     'as' => 'adminFaqs',
-    'uses' => 'AdminController@faqs'
+    'uses' => 'Admin\ContentController@faqs'
 ])->middleware('jlma.checkauth','jlma.breadcrumb');
 
 Route::get('/admin/doDropFaq/{slug}',[
     'as' => 'adminDoDropFaq',
-    'uses' => 'AdminController@doDropFaq'
+    'uses' => 'Admin\ContentController@doDropFaq'
 ])->middleware('jlma.checkauth');
 
 
 Route::get('/admin/customerService',[
     'as' => 'adminCustomerService',
-    'uses' => 'AdminController@customerService'
+    'uses' => 'Admin\ContentController@customerService'
 ])->middleware('jlma.checkauth','jlma.breadcrumb');
 
 
 Route::get('/admin/doDropCustomerService/{slug}',[
     'as' => 'adminDoDropCustomerService',
-    'uses' => 'AdminController@doDropCustomerService'
+    'uses' => 'Admin\ContentController@doDropCustomerService'
 ])->middleware('jlma.checkauth');
 
 Route::get('/admin/stats',[
     'as' => 'adminStats',
-    'uses' => 'AdminController@stats'
+    'uses' => 'Admin\ContentController@stats'
 ])->middleware('jlma.checkauth','jlma.breadcrumb');
 
 
 Route::get('/admin/doDropStat/{slug}',[
     'as' => 'adminDoDropStat',
-    'uses' => 'AdminController@doDropStat'
+    'uses' => 'Admin\ContentController@doDropStat'
 ])->middleware('jlma.checkauth');
 
 Route::get('/admin/logs',[
     'as' => 'adminLogs',
-    'uses' => 'AdminController@logs'
+    'uses' => 'Admin\EventController@logs'
 ])->middleware('jlma.checkauth','jlma.breadcrumb');
 
 
 Route::get('/admin/doArchiveEvent/{slug}',[
     'as' => 'adminDoArchiveEvent',
-    'uses' => 'AdminController@doArchiveEvent'
+    'uses' => 'Admin\EventController@doArchiveEvent'
 ])->middleware('jlma.checkauth');
 
 
 Route::get('/admin/eventCard/{slug}',[
     'as' => 'adminEventCard',
-    'uses' => 'AdminController@eventCard'
+    'uses' => 'Admin\EventController@eventCard'
 ])->middleware('jlma.checkauth','jlma.breadcrumb');
 
 
@@ -382,12 +381,12 @@ Route::get('/admin/eventCard/{slug}',[
 
 Route::get('/admin/usernotifs',[
     'as' => 'adminUserNotifs',
-    'uses' => 'AdminController@userNotifs'
+    'uses' => 'Admin\EventController@userNotifs'
 ]);
 
 Route::get('/admin/notificationsList',[
     'as' => 'adminNotificationsList',
-    'uses' => 'AdminController@notificationsList'
+    'uses' => 'Admin\EventController@notificationsList'
 ])->middleware('jlma.checkauth' , 'jlma.breadcrumb');
 
 
@@ -406,126 +405,126 @@ Route::post('/admin/doLogin',[
 
 Route::post('/admin/doAddVehicle',[
    'as' => 'adminDoAddVehicle',
-    'uses' => 'AdminController@doAddVehicle'
+    'uses' => 'Admin\VehiclesController@doAddVehicle'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doEditVehicle',[
    'as' => 'adminDoEditVehicle',
-    'uses' => 'AdminController@doEditVehicle'
+    'uses' => 'Admin\VehiclesController@doEditVehicle'
 ])->middleware('jlma.checkauth');
 
 
 Route::post('/admin/doDropVehicleList',[
     'as' => 'adminDoDropVehicleList',
-    'uses' => 'AdminController@doDropVehicleList'
+    'uses' => 'Admin\VehiclesController@doDropVehicleList'
 ])->middleware('jlma.checkauth' );
 
 
 Route::post('/admin/doAddVehicleImage',[
    'as' => 'adminDoAddVehicleImage',
-    'uses' => 'AdminController@doAddVehicleImage'
+    'uses' => 'Admin\VehiclesController@doAddVehicleImage'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doAddVehicleDocument',[
    'as' => 'adminDoAddVehicleDocument',
-    'uses' => 'AdminController@doAddVehicleDocument'
+    'uses' => 'Admin\VehiclesController@doAddVehicleDocument'
 ])->middleware('jlma.checkauth');
 
 
 Route::post('/admin/doChangeVehicleVideoLink',[
    'as' => 'adminDoChangeVehicleVideoLink',
-    'uses' => 'AdminController@doChangeVehicleVideoLink'
+    'uses' => 'Admin\VehiclesController@doChangeVehicleVideoLink'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doSearchRentings',[
    'as' => 'adminDoSearchRentings',
-    'uses' => 'AdminController@doSearchRentings'
+    'uses' => 'Admin\RentingsController@doSearchRentings'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doDropRentingList',[
    'as' => 'adminDoDropRentingList',
-    'uses' => 'AdminController@doDropRentingList'
+    'uses' => 'Admin\RentingsController@doDropRentingList'
 ])->middleware('jlma.checkauth');
 
 
 
 Route::post('/admin/doSearchClients',[
    'as' => 'adminDoSearchClients',
-    'uses' => 'AdminController@doSearchClients'
+    'uses' => 'Admin\ClientsController@doSearchClients'
 ])->middleware('jlma.checkauth');
 
 
 
 Route::post('/admin/doDropClientList',[
    'as' => 'adminDoDropClientList',
-    'uses' => 'AdminController@doDropClientList'
+    'uses' => 'Admin\ClientsController@doDropClientList'
 ])->middleware('jlma.checkauth');
 
 
 
 Route::post('/admin/doAddVehicleBrand',[
    'as' => 'adminDoAddVehicleBrand',
-    'uses' => 'AdminController@doAddVehicleBrand'
+    'uses' => 'Admin\VehiclesController@doAddVehicleBrand'
 ])->middleware('jlma.checkauth');
 
 
 Route::post('/admin/doDropVehicleBrand',[
    'as' => 'adminDoDropVehicleBrand',
-    'uses' => 'AdminController@doDropVehicleBrand'
+    'uses' => 'Admin\VehiclesController@doDropVehicleBrand'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doAddVehicleModel',[
    'as' => 'adminDoAddVehicleModel',
-    'uses' => 'AdminController@doAddVehicleModel'
+    'uses' => 'Admin\VehiclesController@doAddVehicleModel'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doDropVehicleModel',[
    'as' => 'adminDoDropVehicleModel',
-    'uses' => 'AdminController@doDropVehicleModel'
+    'uses' => 'Admin\VehiclesController@doDropVehicleModel'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doAddVehicleType',[
    'as' => 'adminDoAddVehicleType',
-    'uses' => 'AdminController@doAddVehicleType'
+    'uses' => 'Admin\VehiclesController@doAddVehicleType'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doDropVehicleType',[
    'as' => 'adminDoDropVehicleType',
-    'uses' => 'AdminController@doDropVehicleType'
+    'uses' => 'Admin\VehiclesController@doDropVehicleType'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doAddTestimonial',[
    'as' => 'adminDoAddTestimonial',
-    'uses' => 'AdminController@doAddTestimonial'
+    'uses' => 'Admin\ContentController@doAddTestimonial'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doAddFaq',[
     'as' => 'adminDoAddFaq',
-    'uses' => 'AdminController@doAddFaq'
+    'uses' => 'Admin\ContentController@doAddFaq'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doAddCustomerService',[
     'as' => 'adminDoAddCustomerService',
-    'uses' => 'AdminController@doAddCustomerService'
+    'uses' => 'Admin\ContentController@doAddCustomerService'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doAddStat',[
     'as' => 'adminDoAddStat',
-    'uses' => 'AdminController@doAddStat'
+    'uses' => 'Admin\ContentController@doAddStat'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doSearchEventsBetween/',[
     'as' => 'adminDoSearchEventsBetween',
-    'uses' => 'AdminController@doSearchEventsBetween'
+    'uses' => 'Admin\EventController@doSearchEventsBetween'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doSearchLastEvents/',[
     'as' => 'adminDoSearchLastEvents',
-    'uses' => 'AdminController@doSearchLastEvents'
+    'uses' => 'Admin\EventController@doSearchLastEvents'
 ])->middleware('jlma.checkauth');
 
 Route::post('/admin/doArchiveEventList',[
     'as' => 'adminDoArchiveEventList',
-    'uses' => 'AdminController@doArchiveEventList'
+    'uses' => 'Admin\EventController@doArchiveEventList'
 ])->middleware('jlma.checkauth');
 

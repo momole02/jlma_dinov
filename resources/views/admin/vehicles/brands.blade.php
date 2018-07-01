@@ -1,4 +1,4 @@
-@extends('admin/skeleton')
+@extends('admin.skeleton')
 
 @section('title')
     --JLMA-- Gestion des marques, modèles et types de véhicules
