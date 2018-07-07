@@ -3,7 +3,7 @@
 
         <h2 class="section-title wow fadeInDown" data-wow-offset="200" data-wow-delay="100ms">
             <small>Avez vous besoin de quelque chose ?</small>
-            <span>Consultez le service client </span>
+            <span>Notre équipe </span>
         </h2>
 
         <!-- Team row -->

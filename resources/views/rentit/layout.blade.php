@@ -80,8 +80,9 @@
                                 @endphp
 
                                     <li ><a href="{{$prefix}}#find-best">Accueil</a></li>
-                                    <li ><a href="{{$prefix}}#who-we-are">Qui sommes nous ?</a></li>
-                                    <li ><a href="{{$prefix}}#our-cars">Catalogue</a></li>
+                                    <li ><a href="{{$prefix}}#who-we-are">A propos</a></li>
+                                    <li ><a href="{{ route('showCars') }}">Véhicules</a></li>
+                                <li ><a href="#"><span class="badge" style="padding:5px;font-size: 15px;background-color:#5687bf">Mon assurance</span></a></li>
 
                                     <!-- TODO : Remplacer par espace membres au cas ou un utilisateur est connecté-->
                                     @if( Session::has('client-account-data') )

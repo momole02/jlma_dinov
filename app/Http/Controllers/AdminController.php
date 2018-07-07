@@ -62,7 +62,7 @@ class AdminController extends Controller
                     ->with('total_testimonials', $adminBusiness->totalTestimonials())
                     ->with('choosed_menu' , $choosedMenu );
             }else{
-                return view('admin/dashboard')
+                return view('admin/main/dashboard')
                     ->with('no_content' , true)
                     ->with('choosed_menu' , $choosedMenu );
             }

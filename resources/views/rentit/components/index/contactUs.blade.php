@@ -11,7 +11,9 @@
         <div class="row">
             <div class="col-md-6 wow fadeInRight" data-wow-offset="200" data-wow-delay="200ms">
 
-                <p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum.</p>
+                <p>
+                    This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum.
+                </p>
 
                 <ul class="media-list contact-list">
                     <li class="media">
