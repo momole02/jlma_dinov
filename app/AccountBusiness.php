@@ -10,6 +10,8 @@ namespace jlma;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AccountBusiness
@@ -477,6 +479,57 @@ class AccountBusiness
         $newPassword = Hash::make( '123456789' );
 
         DB::table('jla_compte')->where('slug',$slug)->update(['password'=>$newPassword]);
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+    public function getConfig( )
+    {
+        /* ouvrir la config afin de recupérer le mail */
+        $configFileName = storage_path( 'app/config/config.json' );
+        if( !file_exists( $configFileName ) )
+            throw new \Exception("Le fichier de configuration $configFileName est absent");
+        else {
+
+            $plainJsonConfig = file_get_contents($configFileName);
+            $data = json_decode($plainJsonConfig);
+            return $data;
+        }
+        return null;
+    }
+
+    /**
+     * @brief Envoi un email à un utilisateur pour lui signaler que son compte est desormais disponible
+     *
+     * @param $account_slug string slug de l'utlisateur
+    */
+    public function sendValidationEmail( $account_slug )
+    {
+
+        $clientData =  $this->clientData( $account_slug );
+
+        if( $clientData!=null ){
+
+                $this->clientData=$clientData;
+
+                Mail::send( 'email/mailTemplate' , [
+                    'user_name' => $clientData->civilite.' '.$clientData->nom.' '.$clientData->prenom,
+                ] ,function($message){
+                    $config = $this->getConfig();
+
+
+                    $message->from($config->daemonMail , "JLMA Mailer");
+                    $message->to($this->clientData->email ,
+                        $this->clientData ->civilite.' '
+                        .$this->clientData->nom.' '
+                        .$this->clientData ->prenom);
+
+                    $message->subject( "Inscription acceptée" );
+                });
+        }
     }
 
 }
