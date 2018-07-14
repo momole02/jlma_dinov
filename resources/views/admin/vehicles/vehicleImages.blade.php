@@ -110,21 +110,35 @@
 
                         <div class="row">
 
-                            @isset($pictures_list)
-                                @foreach( $pictures_list as $picture )
-                                    <div class="col-md-4" >
-                                        <div style="background:#c4c4c4;border:1px solid gray;padding:4px">
-                                            <a href="{{asset(Storage::url($picture['path']))}}">
-                                                <img src="{{asset(Storage::url($picture['path']))}}" class="img img-responsive">
-                                            </a>
-                                            <br>
-                                            @if(!isset($readonly) || $readonly==false)
-                                                <a href="{{ route('adminDropVehicleImage' , ['id'=>$picture['id']]) }}" class="btn btn-danger">Supprimer</a>
-                                            @endif
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @endisset
+                            <div class="col-lg-12">
+                                <table class="table table-responsive table-hover">
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Supprimer</th>
+                                    </tr>
+                                    @isset($pictures_list)
+                                        @foreach( $pictures_list as $picture )
+                                            <tr>
+                                                <td>
+                                                    <div style="width:150px" >
+                                                        <a href="{{asset(Storage::url($picture['path']))}}">
+                                                            <img src="{{asset(Storage::url($picture['path']))}}" class="img img-responsive img-thumbnail">
+                                                        </a>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    @if(!isset($readonly) || $readonly==false)
+                                                        <a href="{{ route('adminDropVehicleImage' , ['id'=>$picture['id']]) }}" class="btn btn-danger">Supprimer</a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+
+                                        @endforeach
+                                    @endisset
+
+                                </table>
+                            </div>
 
                         </div>
 

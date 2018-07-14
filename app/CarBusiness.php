@@ -255,28 +255,42 @@ class CarBusiness
      * @brief ajoute les extra-données d'une voiture(le modèle,la marque, le type)
      * depuis les autres tables (avec les clés étrangères)
      *
+     * @param $car stdClass reference sur la classe contenant les données du véhicule
+     * @param $width_images boolean avec toutes ses images ?
+     * @param $renting_intervals boolean avec tous les intervalles de reservations ?
+     * @param $owner_infos boolean avec toutes les informations du propriétaire
+     *
      */
-    private function fillCarExtraInfo( & $car  )
+    private function fillCarExtraInfo( & $car , $with_images=true , $renting_intervals=true , $owner_infos=true )
     {
-
-        /* informations sur le client */
-        $accountBusiness = new AccountBusiness( ) ;
-        $clientData = $accountBusiness->clientDataByAccountID( $car->fk_id_proprietaire );
-        $car->ownerName = $clientData->civilite.' '.$clientData->prenom.' '.$clientData->nom;
-        $car->ownerCNI = $clientData->numcni;
-        $car->ownerContact = $clientData->contact;
-
 
         $car->model = $this->carModelById($car->fk_id_model);
         $car->marque = $this->carBrandById($car->fk_id_marque);
         $car->type =   $this->carTypeById($car->fk_id_type_vehic);
-        $car->reserv_dates=$this->carRentingsIntervals($car->id_vehicul);
 
+        /* informations sur le client */
+        if( $owner_infos ){
+            $accountBusiness = new AccountBusiness( ) ;
+            $clientData = $accountBusiness->clientDataByAccountID( $car->fk_id_proprietaire );
+            $car->ownerName = $clientData->civilite.' '.$clientData->prenom.' '.$clientData->nom;
+            $car->ownerCNI = $clientData->numcni;
+            $car->ownerContact = $clientData->contact;
 
-        $imgs = DB::table('jla_image_vehicul')->select('img_chemin')->where('fk_id_vehicule', $car->id_vehicul)->get();
-        $car->liste_photos = [];
-        foreach($imgs as $img){
-            $car->liste_photos[] = $img->img_chemin;
+        }
+
+        /* intervalles des dates de reservations */
+        if( $renting_intervals ){
+            $car->reserv_dates=$this->carRentingsIntervals($car->id_vehicul);
+        }
+
+        /*toutes les images*/
+        if( $with_images ){
+            $imgs = DB::table('jla_image_vehicul')->select('img_chemin')->where('fk_id_vehicule', $car->id_vehicul)->get();
+            $car->liste_photos = [];
+            foreach($imgs as $img){
+                $car->liste_photos[] = $img->img_chemin;
+            }
+
         }
 
     }
@@ -1018,6 +1032,101 @@ class CarBusiness
         DB::table('jla_type_vehicul')->where( 'id_type_vehic' , $id )->delete();
     }
 
+
+    public function addCarPicture( & $car )
+    {
+        /* mettre le thumbnail */
+        $images = $this->vehicleImagesBySlug( $car->slug );
+        // var_dump( $images ); die;
+        if( count($images)==0 ){ /*  image par défaut*/
+            $car->picture = 'rentit/img/preview/cars/car-600x426.jpg';
+        }else{ /* prendre la première image */
+            $car->picture = Storage::url( $images[0]['path'] );
+        }
+    }
+    public function getCarsByCategoryID( $id , $nb_cars )
+    {
+        $cars = DB::table('jla_vehicul')->where( 'fk_id_type_vehic' ,$id )->limit( $nb_cars )->get();
+
+        for( $i=0;$i<count($cars);++$i ){
+
+            $this->addCarPicture( $cars[$i] );
+
+            $this->fillCarExtraInfo( $cars[$i] , false , false  , false );
+        }
+
+        return $cars;
+    }
+
+    public function getCarsExcludeCategoriesID( $id_list , $nb_cars )
+    {
+        $cars = DB::table('jla_vehicul')->whereNotIn( 'fk_id_type_vehic' ,$id_list )->limit( $nb_cars )->get();
+
+        for( $i=0;$i<count($cars);++$i ){
+
+            $this->addCarPicture( $cars[$i] );
+            $this->fillCarExtraInfo( $cars[$i] , false , false  , false );
+        }
+
+        return $cars;
+    }
+
+
+
+    public function allCarsByCategories( $nb_cars )
+    {
+
+        $categoriesID = [
+            ['cat'=>'Citadines','id'=>1],
+            ['cat'=>'Berlines','id'=>2],
+            ['cat'=>'Compact','id'=>3],
+            ['cat'=>'Monospace' , 'id'=>5],
+            ['cat'=>'Cabriolet' , 'id'=>6],
+            ['cat'=>'4x4' , 'id'=>7],
+            ['cat'=>'Vintage' , 'id'=>8]
+        ];
+
+        $choosedCategories=[];
+
+        /* chercher une combinaison de deux catégories de véhicules non vides */
+        for($i=0;$i<2;++$i){
+
+            $id=-1;
+            do{
+                /* chercher une catégorie non vide */
+
+                $index = rand( 0 , count($categoriesID)-1 ); /* selectionner un catégorie au hasard */
+                $id = $categoriesID[$index]['id'];
+                $count=DB::table('jla_vehicul')->where('fk_id_type_vehic',$id)->count(); /* compter le nombre de véhicules à l'intérieur */
+
+                if( $count==0 ) /* supprimer cet index du tableau de recherche s'il n'y a aucun vehicule*/
+                    array_splice( $categoriesID , $index );
+
+            }while( $count==0 && !empty( $categoriesID )  );
+
+            if( $count>0 ){
+                $choosedCategories[] = $categoriesID[$index];
+                array_splice( $categoriesID , $index ); /* supprimer la catégorie choisie */
+            }
+        }
+
+        if( count( $choosedCategories )<2 ){ /* combinaison de deux categories de véhicules non vide introuvable */
+            return null ;
+        }
+
+        return [
+
+            $choosedCategories[0]['cat'] =>
+                $this->getCarsByCategoryID( $choosedCategories[0]['id'],$nb_cars ),
+
+            $choosedCategories[1]['cat'] =>
+                $this->getCarsByCategoryID( $choosedCategories[1]['id'],$nb_cars ),
+
+            'Autres' =>
+                $this->getCarsExcludeCategoriesID( [$choosedCategories[0]['id'] , $choosedCategories[1]['id']] , 2*$nb_cars ),
+        ];
+
+    }
 
 
 

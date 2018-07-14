@@ -30,6 +30,8 @@
     @include('rentit/components/index/findBestCarSlide')
     <!-- /PAGE-->
 
+    @include('rentit/components/index/carTypesSlide')
+
     <!-- PAGE-->
     @include('rentit/components/index/bigThumbs')
     <!-- /PAGE-->

@@ -19,7 +19,7 @@
                         <h4><span style="color:#55fa19">Raison : Vous venez de vous inscrire</span></h4>
                             Votre compte est en cours de validation par l'équipe Dinov,
                             vous devez donc patienter(cela peut prendre plusieurs jours) <br>
-                            un SMS vous sera envoyé pour confirmer si vous êtes accepté ou refusé.
+                            un SMS et un email vous seront envoyés pour confirmer votre acceptation.
                         @endif
 
                         @if(isset($why) && $why==2)

@@ -20,6 +20,8 @@ define('NB_ITEMS_PER_PAGE' , '10');
 class AdminController extends Controller
 {
 
+
+
     /**
      * @brief Donne le menu correct(en fonction du type d'utilisateur)
     */
@@ -47,6 +49,9 @@ class AdminController extends Controller
     {
         $adminBusiness = new AdminBusiness();
         $accountBusiness = new AccountBusiness();
+
+        $accountBusiness->sendValidationEmail('medard8413072018125209');
+        
 
         if( $accountBusiness->isClientConnected() ) {
 

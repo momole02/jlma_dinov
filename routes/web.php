@@ -186,6 +186,13 @@ Route::get('/json_priceminmax',[
 ]);
 
 
+/*Affiche les image avec un */
+Route::get('/doResamplePicture/{path}/{thumb_width}/{thumh_height}',[
+   'as' => 'doResamplePicture',
+   'uses' => 'VehiculesController@doResamplePicture'
+]);
+
+
 ////////////////////////////////////////////////////ROUTES ADMIN////////////////////////////////////////////////////////
 
 Route::get('/admin/dashboard' , [

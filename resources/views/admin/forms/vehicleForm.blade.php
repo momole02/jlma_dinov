@@ -153,9 +153,9 @@
             </div>
 
             <div class="form-group">
-                <label for="car-week-price" style="font-size:12px" class="col-sm-2 control-label">Prix/Jour(*)</label>
+                <label for="car-week-price" style="font-size:12px" class="col-sm-2 control-label">Prix/Sem(*)</label>
                 <div class="col-sm-10">
-                    <input required type="number" id="car-week-price" name="car-week-price" class="form-control" placeholder="Prix de la location par jour en F/CFA"
+                    <input required type="number" id="car-week-price" name="car-week-price" class="form-control" placeholder="Prix de la location par semaine en F/CFA"
                            value="{{isset($car_week_price)?$car_week_price:''}}">
                 </div>
             </div>

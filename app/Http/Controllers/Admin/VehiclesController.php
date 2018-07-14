@@ -188,7 +188,7 @@ class VehiclesController extends Controller
         $accountBusiness = new AccountBusiness();
 
         $carBusiness = new CarBusiness();
-        $nbItemsPerPages = NB_ITEMS_PER_PAGE;
+        $nbItemsPerPages = 10;
 
         $car_registration_number = $post['car-registration-number'];
         $car_color = $post['car-color'];
@@ -502,4 +502,48 @@ class VehiclesController extends Controller
     }
 
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    public function doResamplePicture( $path , $thumb_width , $thumb_height )
+    {
+        $path = urldecode($path);
+        
+        if( !file_exists($path) )
+            throw new \Exception(" Le chemin $path est introuvable ");
+
+        list( $width , $height ) = getimagesize( $path );
+
+        $imgSource = null ;
+
+        $pathinfo = pathinfo( $path );
+        $ext = strtolower( $pathinfo['extension'] );
+        if( $ext === 'png' )
+            $imgSource=imagecreatefrompng( $path ) ;
+        else if( $ext === 'jpg' || $ext === 'jpeg' )
+            $imgSource=imagecreatefromjpeg( $path );
+        else{
+            throw new \Exception( "Le format format de l'image $path est non supporté" );
+        }
+
+        $r1 = ((float)$thumb_width)/(float)$width;
+        $r2 = ((float)$thumb_height)/(float)$height;
+        $r = max( $r1 , $r2 ); /* prendre le ratio maximal */
+
+        /* calculer les dimensions des nouvelles images */
+        $newImageWidth =  round((float)$width * $r);
+        $newImageHeight = rount((float)$height * $r);
+
+        $imgDest = imagecreatetruecolor( $newImageWidth , $newImageHeight );
+
+        imagecopyresampled( $imgSource , $imgDest , 0 , 0 , 0 , 0,
+            $newImageWidth , $newImageHeight , $width , $height  );
+
+        header('Content-type: image/jpeg');
+
+        imagejpeg( $imgDest );
+
+    }
 }

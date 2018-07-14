@@ -33,7 +33,9 @@ class HomeController extends Controller
             ->with('faqs' , $faqs)
             ->with('stats' , $stats)
             ->with('customer_services' , $customer_services)
-            ->with('home',true)->with('cars' , $car_business->allCars());
+            ->with('home',true)
+            ->with('cars_by_categories' , $car_business->allCarsByCategories(5))
+            ->with('cars' , $car_business->allCars());
     }
 
     public function howitworks()
