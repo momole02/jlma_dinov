@@ -6,10 +6,12 @@
                 if(Session::has('post_data'))   $post_data = Session::get('post_data');
             @endphp
         </div>
+
         <div class="row">
             <div class="col-sm-6" >
                 <h3 class="block-title"><span>Login</span></h3>
                 <form action="{{route('doLogin')}}" method="post" class="form-login">
+
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="row">
                         <div class="col-md-12 hello-text-wrap">

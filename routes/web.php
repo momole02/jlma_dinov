@@ -26,6 +26,12 @@ Route::get('/howitworks',[
     ]
 )->middleware('jlma.front.breadcrumb');
 
+/** Route de test*/
+Route::get('/insc',[
+        'as' => 'insc',
+        'uses' => 'HomeController@testInsc'
+    ]
+)->middleware('jlma.front.breadcrumb');
 
 
 /** Route de l'affichage des voitures*/
@@ -42,11 +48,32 @@ Route::get('/carDetails/{slug}' , [
 ])->middleware('jlma.front.breadcrumb');
 
 
+Route::get('/carBuy/{slug}' , [
+    'as' => 'carBuy',
+    'uses' => 'CarController@carBuy'
+]);
+
+Route::get( '/dropBuyRequest/{slug}' , [
+    'as' => 'dropBuyRequest',
+    'uses' => 'CarSellController@dropBuy'
+] );
+Route::get('/carBuyNegociations/{slug}' , [
+    'as' => 'carBuyNegociations',
+    'uses' => 'CarController@carBuyNegociations'
+]);
+
 /** Route de la requête de location des voitures */
 Route::post('/doCarLeasing' , [
     'as' => 'doCarLeasing',
     'uses' => 'CarController@doCarLeasing'
 ]);
+
+/**Route de la requete de vente  */
+Route::post('/doCarSellRequest' , [
+    'as' => 'doCarSellRequest' , 
+    'uses' => 'CarController@doCarSellRequest'
+]);
+
 
 /** Route du formulaire de login*/
 Route::get('/login' , [
@@ -109,14 +136,11 @@ Route::post('/doChangePhoto' , [
     'uses' => 'ClientController@doChangePhoto'
 ]);
 
-
-
 /** Route de requête de recherche de voitures disponibles*/
 Route::post('/doSearchCars' , [
     'as' => 'doSearchCars',
     'uses' => 'CarController@doSearchCars'
 ]);
-
 
 
 /** Route d'affichage du resultat de la recherche
@@ -173,7 +197,7 @@ Route::get('/backFromSignup3',[
 ]);
 
 
-/* ...JSON min,max des années des vehicules*/
+/* ...JSON min,max des années des vehicules*/                       
 Route::get('/json_yearsminmax',[
     'as' => 'json_yearsminmax',
     'uses' => 'CarController@json_yearsminmax'
@@ -186,14 +210,8 @@ Route::get('/json_priceminmax',[
 ]);
 
 
-/*Affiche les image avec un */
-Route::get('/doResamplePicture/{path}/{thumb_width}/{thumh_height}',[
-   'as' => 'doResamplePicture',
-   'uses' => 'VehiculesController@doResamplePicture'
-]);
 
-
-////////////////////////////////////////////////////ROUTES ADMIN////////////////////////////////////////////////////////
+////////////////////////////////////////////////////ROUTES ADMIN///////////////////////////////////////////////////
 
 Route::get('/admin/dashboard' , [
     'as' => 'adminDashboard',
@@ -518,4 +536,5 @@ Route::post('/admin/doArchiveEventList',[
     'as' => 'adminDoArchiveEventList',
     'uses' => 'Admin\EventController@doArchiveEventList'
 ])->middleware('jlma.checkauth');
+
 

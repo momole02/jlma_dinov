@@ -56,7 +56,7 @@
 
                                     <div class="swiper-slide">
                                         <div class="thumbnail no-border no-padding thumbnail-car-card">
-                                            <div class="media">
+                                            <div style="height:300px" class="media">
                                                 <a class="media-link" data-gal="prettyPhoto" href="{{ asset($currentCar->picture) }}">
                                                     <img src="{{ asset($currentCar->picture) }}" alt=""/>
                                                     <span class="icon-view"><strong><i class="fa fa-eye"></i></strong></span>

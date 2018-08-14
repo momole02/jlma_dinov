@@ -82,13 +82,24 @@
                                     <li ><a href="{{$prefix}}#find-best">Accueil</a></li>
                                     <li ><a href="{{$prefix}}#who-we-are">A propos</a></li>
                                     <li ><a href="{{ route('showCars') }}">Véhicules</a></li>
-                                <li ><a href="#"><span class="badge" style="padding:5px;font-size: 15px;background-color:#5687bf">Mon assurance</span></a></li>
-
+                                    <li>
+                                        <a href="#">Nos services</a>
+                                        <ul>
+                                            <li><a href="#"><span class="badge" style="padding:5px;font-size: 15px;background-color:#5687bf">Mon assurance</span></a></li>
+                                            <li><a href="#"><span class="badge" style="padding:5px;font-size: 15px;background-color:#800066">Covoiturage</span></a></li>            
+                                        </ul>
+                                    </li>
+                                    
                                     <!-- TODO : Remplacer par espace membres au cas ou un utilisateur est connecté-->
                                     @if( Session::has('client-account-data') )
-                                        <li ><a href="{{ route('members') }}">Espace locataires</a></li>
-                                        <li ><a href="{{ route('adminDashboard') }}">Admin</a></li>
-                                        <li ><a href="{{ route('logout') }}"><span style="color:red">Deconnecter</span></a></li>
+
+                                        <li><a href="#" >Options membres</a>
+                                            <ul>
+                                            <li ><a href="{{ route('members') }}">Profil</a></li>
+                                            <li ><a href="{{ route('adminDashboard') }}">Mon espace admin</a></li>
+                                            <li ><a href="{{ route('logout') }}"><span style="color:red">Deconnecter</span></a></li>
+                                            </ul>
+                                        </li>
                                     @else
                                     <li ><a href="{{ route('members') }}">Login</a></li>
                                     @endif

@@ -62,6 +62,8 @@
                                 <li><b>Energie</b>: {{$vehicleEntry->energie}}</li>
                                 <li><b>Boite à vitesse</b>: {{$vehicleEntry->boite_vitesse}}</li>
                                 <li><b>Nombre de chevaux</b>: {{$vehicleEntry->cv_fiscaux}}</li>
+                                <li><b>Prix de vente</b>: <span style="color:red;font-weight: bold"> {{$vehicleEntry->prix_vente > 0 ?$vehicleEntry->prix_vente.' FCFA' :'non disponible' }}</span></li>
+                                <li><b>Stock disponible</b>: {{$vehicleEntry->stock_dispo >0 ?$vehicleEntry->stock_dispo : 'non disponible' }}</li>
                             </ul>
                             <ul>
                                 <li><b>Propriétaire : </b><i style="color:green">{{$vehicleEntry->ownerName}}</i></li>

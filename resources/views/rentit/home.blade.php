@@ -141,28 +141,3 @@
 @endsection
 
 
-
-@section('ExtraJS')
-    <script type="text/javascript">
-        $(function(){
-
-            $('#price-slider').val(10000,10000000);
-            $('#price-slider').jRange({
-                from:10000,
-                to:10000000,
-                format:'%s FCFA',
-                step:1,
-                width:500,
-                showScale:true,
-                isRange:true,
-                theme:'theme-blue',
-                onstatechange:function (){
-                    console.log('Test');
-                    val=$('#price-slider').val();
-                    $('#price-slider-info').text(val.replace(',',' à '));
-                }
-            });
-
-        });
-    </script>
-@endsection

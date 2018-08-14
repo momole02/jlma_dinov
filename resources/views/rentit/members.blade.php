@@ -24,6 +24,9 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
+                            @if( isset($reservation_validated) )
+                                <b class="text-success">Votre reservation à été prise en compte</b>
+                            @endif
                             <ul class="list-icons">
                                 <li><i class="fa fa-arrow-circle-right"></i><b>N° CNI : </b>  {{ $client_data->numcni }}</li>
                                 <li><i class="fa fa-arrow-circle-right"></i><b>Nom : </b>  {{ $client_data->civilite }} {{ $client_data->nom }}</li>

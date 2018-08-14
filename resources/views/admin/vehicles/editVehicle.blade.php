@@ -103,7 +103,9 @@
                         'car_week_price' => isset($vehicle) ? $vehicle->prix_semaine : '',
                         'car_month_price' => isset($vehicle) ? $vehicle->prix_mois : '',
                         'car_year_price' => isset($vehicle) ? $vehicle->prix_an : '',
-
+                        'car_sell_price' => isset($vehicle) ? $vehicle->prix_vente : 0,
+                        'car_avail_amount' => isset($vehicle) ? $vehicle->stock_dispo : 0,
+                        'car_max_discount' => isset($vehicle) ? $vehicle->marge_reduction : 0,
                         'return_page' => isset($return_page) ? $return_page : null,
                         'car_slug' => isset($vehicle) ? $vehicle->slug : '',
 

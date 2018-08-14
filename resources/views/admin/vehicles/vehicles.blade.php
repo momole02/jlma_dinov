@@ -188,6 +188,8 @@
                         'car_day_price' => '100000',
                         'car_month_price' => '200000',
                         'car_year_price' => '300000',
+                        'car_sell_price' => '0',
+                        'car_avail_stock' => '0'
 
                     ])
 
@@ -214,12 +216,5 @@
 @section('extra-scripts')
     <script src="{{asset('admin/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}} "></script>
     <script src="{{asset('admin/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
-    <script type="text/javascript">
-        $(function(){
-
-           $('.my-colorpicker1').colorpicker()
-           $('.select2').select2()
-        });
-
-    </script>
+   
 @endsection

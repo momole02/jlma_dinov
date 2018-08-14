@@ -144,10 +144,11 @@
                 </div>
             </div>
             <hr>
+
             <div class="form-group">
                 <label for="car-day-price" style="font-size:12px" class="col-sm-2 control-label">Prix/Jour(*)</label>
                 <div class="col-sm-10">
-                    <input required type="number" id="car-day-price" name="car-day-price" class="form-control" placeholder="Prix de la location par jour en F/CFA"
+                    <input type="number" id="car-day-price" name="car-day-price" class="renting-item form-control" placeholder="Prix de la location par jour en F/CFA"
                            value="{{isset($car_day_price)?$car_day_price:''}}">
                 </div>
             </div>
@@ -155,7 +156,7 @@
             <div class="form-group">
                 <label for="car-week-price" style="font-size:12px" class="col-sm-2 control-label">Prix/Sem(*)</label>
                 <div class="col-sm-10">
-                    <input required type="number" id="car-week-price" name="car-week-price" class="form-control" placeholder="Prix de la location par semaine en F/CFA"
+                    <input  type="number" id="car-week-price" name="car-week-price" class="renting-item  form-control" placeholder="Prix de la location par semaine en F/CFA"
                            value="{{isset($car_week_price)?$car_week_price:''}}">
                 </div>
             </div>
@@ -163,17 +164,33 @@
             <div class="form-group">
                 <label for="car-month-price"  style="font-size:12px"  class="col-sm-2 control-label">Prix /Mois(*)</label>
                 <div class="col-sm-10">
-                    <input required type="number" id="car-month-price" name="car-month-price" class="form-control" placeholder="Prix de la location par mois en F/CFA"
+                    <input  type="number" id="car-month-price" name="car-month-price" class="renting-item form-control" placeholder="Prix de la location par mois en F/CFA"
                            value="{{isset($car_month_price)?$car_month_price:''}}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="car-year-price" style="font-size:12px"  class="col-sm-2 control-label">Prix /An(*) </label>
                 <div class="col-sm-10">
-                    <input required type="number" id="car-year-price" name="car-year-price" class="form-control" placeholder="Prix de la location par an en F/CFA"
+                    <input required type="number" id="car-year-price" name="car-year-price" class="renting-item form-control" placeholder="Prix de la location par an en F/CFA"
                            value="{{isset($car_year_price)?$car_year_price:''}}">
                 </div>
             </div>
+
+            <div class="form-group">
+                <div class="col-lg-3"><label>Prix de vente : </label></div>
+                <div class="col-lg-6"><input class=" form-control selling-item" type="number" min="0" name="car-sell-price" value="{{isset($car_sell_price) ? $car_sell_price : 0}}"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-3"><label>Stock disponible : </label></div>
+                <div class="col-lg-6"><input class="form-control selling-item" type="number" min="0" name="car-avail-amount" value="{{isset($car_avail_amount) ? $car_avail_amount : 0}}"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-5"><label>Marge de reduction max(%) : </label></div>
+                <div class="col-lg-4"><input class="form-control selling-item" type="number" min="0" name="car-max-discount" min="0" max="100" value="{{isset($car_max_discount) ? $car_max_discount : 0}}"></div>
+            </div>
+
+
         </div>
 
         <div class="col-lg-6">
